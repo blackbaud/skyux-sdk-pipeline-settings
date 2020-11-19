@@ -1,0 +1,11 @@
+{
+  "name": "@skyux-sdk/pipeline-settings",
+  "version": "1.0.0",
+  "description": "Pipeline settings for SKY UX projects",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Blackbaud, Inc.",
+  "license": "ISC"
+}
