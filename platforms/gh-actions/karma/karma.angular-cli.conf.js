@@ -4,7 +4,6 @@
 module.exports = function (config) {
   config.set({
     autoWatch: false,
-    singleRun: true,
-    browsers: ['ChromeHeadless']
+    singleRun: true
   });
 };
