@@ -2,10 +2,16 @@
   "name": "@skyux-sdk/pipeline-settings",
   "version": "1.0.0",
   "description": "Pipeline settings for SKY UX projects",
+  "repository": {
+    "url": "https://github.com/blackbaud/skyux-sdk-pipeline-settings"
+  },
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Blackbaud, Inc.",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "puppeteer": "5.5.0"
+  }
 }
