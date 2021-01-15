@@ -11,7 +11,5 @@
   },
   "author": "Blackbaud, Inc.",
   "license": "ISC",
-  "dependencies": {
-    "puppeteer": "5.5.0"
-  }
+  "dependencies": {}
 }
