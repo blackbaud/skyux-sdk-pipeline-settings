@@ -7,10 +7,13 @@ exports.config = {
     chromeOptions: {
       binary: require('puppeteer').executablePath(),
       args: [
+        '--disable-dev-shm-usage',
         '--disable-extensions',
         '--disable-gpu',
         '--headless',
-        '--no-sandbox'
+        '--ignore-certificate-errors',
+        '--no-sandbox',
+        '--start-maximized'
       ]
     }
   }
