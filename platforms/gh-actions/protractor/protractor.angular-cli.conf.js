@@ -2,6 +2,19 @@
 // https://github.com/angular/protractor/blob/master/lib/config.ts
 
 exports.config = {
+  capabilities: {
+    chromeOptions: {
+      args: [
+        '--disable-dev-shm-usage',
+        '--disable-extensions',
+        '--disable-gpu',
+        '--headless',
+        '--ignore-certificate-errors',
+        '--no-sandbox',
+        '--start-maximized'
+      ]
+    }
+  },
   params: {
     skyuxVisualRegressionTestingConfig: {
       compareScreenshot: {
