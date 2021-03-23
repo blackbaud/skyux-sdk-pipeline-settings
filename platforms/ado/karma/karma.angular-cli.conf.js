@@ -8,7 +8,8 @@ module.exports = function (config) {
     coverageReporter: {
       reporters: [
         { type: 'text-summary' },
-        { type: 'cobertura' }
+        { type: 'cobertura' },
+        { type: 'junit' }
       ]
     }
   });
