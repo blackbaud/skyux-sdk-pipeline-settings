@@ -24,6 +24,22 @@ module.exports = function (config) {
         { type: 'text-summary' },
         { type: 'cobertura' }
       ]
-    }
+    },
+    // ADO doesn't render default symbols well.
+    mochaReporter: {
+      symbols: {
+        success: '+',
+        info: '#',
+        warning: '!',
+        error: 'x'
+      }
+    },
+
+    logLevel: config.LOG_DEBUG,
+
+    browserDisconnectTimeout: 6e5,
+    browserDisconnectTolerance: 3,
+    browserNoActivityTimeout: 6e5,
+    captureTimeout: 6e5
   });
 };
