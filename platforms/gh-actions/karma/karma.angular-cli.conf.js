@@ -51,7 +51,7 @@ function applyBrowserStackConfig(config) {
   config.plugins.push(require('karma-browserstack-launcher'));
 
   // Create a custom plugin to log the BrowserStack session.
-  config.reporters.push('blackbaud-browserstack');
+  config.reporters.push(['BrowserStack', 'blackbaud-browserstack']);
   config.plugins.push({
     'reporter:blackbaud-browserstack': [
       'type',
@@ -109,7 +109,7 @@ module.exports = function (config) {
     autoWatch: false,
     browsers: ['Chrome'],
     singleRun: true,
-    restartOnFileChange: true
+    restartOnFileChange: false
   });
 
   applyBrowserStackConfig(config);
