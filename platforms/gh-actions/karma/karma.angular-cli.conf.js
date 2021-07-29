@@ -20,6 +20,48 @@ function getBrowserStackLaunchers() {
   return launchers;
 }
 
+function applyBrowserStackConfig(config) {
+  const bsUsername = process.env.BROWSER_STACK_USERNAME;
+  const bsAccessKey = process.env.BROWSER_STACK_ACCESS_KEY;
+
+  if (!bsUsername) {
+    throw Error('Please provide a BrowserStack username!');
+  }
+
+  if (!bsAccessKey) {
+    throw new Error('Please provide a BrowserStack access key!');
+  }
+
+  // Apply BrowserStack overrides.
+  const customLaunchers = getBrowserStackLaunchers();
+
+  config.set({
+    customLaunchers,
+    browsers: Object.keys(customLaunchers),
+    browserStack: {
+      accessKey: bsAccessKey,
+      build: process.env.BROWSER_STACK_BUILD_ID,
+      enableLoggingForApi: true,
+      name: 'ng test',
+      project: process.env.BROWSER_STACK_PROJECT,
+      username: bsUsername
+    }
+  });
+
+  config.plugins.push(require('karma-browserstack-launcher'));
+
+  // Create a custom plugin to log the BrowserStack session.
+  config.reporters.push('blackbaud-browserstack');
+  config.plugins.push({
+    'reporter:blackbaud-browserstack': [
+      'type',
+      function (/* BrowserStack:sessionMapping */ sessions) {
+        this.onBrowserComplete = (browser) => logBrowserStackSession(sessions[browser.id]);
+      }
+    ]
+  });
+}
+
 module.exports = function (config) {
   // Default config provided by Angular CLI.
   config.set({
@@ -63,52 +105,12 @@ module.exports = function (config) {
     reporters: ['progress', 'kjhtml'],
     port: 9876,
     colors: true,
-    logLevel: config.LOG_DEBUG,
+    logLevel: config.LOG_INFO,
     autoWatch: false,
     browsers: ['Chrome'],
     singleRun: true,
     restartOnFileChange: true
   });
 
-  const bsUsername = process.env.BROWSER_STACK_USERNAME;
-  const bsAccessKey = process.env.BROWSER_STACK_ACCESS_KEY;
-
-  if (!bsUsername) {
-    throw Error('Please provide a BrowserStack username!');
-  }
-
-  if (!bsAccessKey) {
-    throw new Error('Please provide a BrowserStack access key!');
-  }
-
-  // Apply BrowserStack overrides.
-  const customLaunchers = getBrowserStackLaunchers();
-
-  console.log('Custom BrowserStack launchers generated:', customLaunchers);
-
-  config.set({
-    customLaunchers,
-    browsers: Object.keys(customLaunchers),
-    browserStack: {
-      accessKey: bsAccessKey,
-      build: process.env.BROWSER_STACK_BUILD_ID,
-      enableLoggingForApi: true,
-      name: 'ng test',
-      project: process.env.BROWSER_STACK_PROJECT,
-      username: bsUsername
-    }
-  });
-
-  config.plugins.push(require('karma-browserstack-launcher'));
-
-  // Create a custom plugin to log the BrowserStack session.
-  // config.reporters.push(['BrowserStack', 'blackbaud-browserstack']);
-  // config.plugins.push({
-  //   'reporter:blackbaud-browserstack': [
-  //     'type',
-  //     function (/* BrowserStack:sessionMapping */ sessions) {
-  //       this.onBrowserComplete = (browser) => logBrowserStackSession(sessions[browser.id]);
-  //     }
-  //   ]
-  // });
+  applyBrowserStackConfig(config);
 };
