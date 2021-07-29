@@ -30,7 +30,7 @@ module.exports = function (config) {
       require('karma-chrome-launcher'),
       require('karma-jasmine-html-reporter'),
       require('karma-coverage'),
-      require('@angular-devkit/build-angular/plugins/karma')
+      require('@angular-devkit/build-angular/plugins/karma'),
     ],
     client: {
       jasmine: {
@@ -98,6 +98,8 @@ module.exports = function (config) {
       username: bsUsername
     }
   });
+
+  config.plugins.push(require('karma-browserstack-launcher'));
 
   // Create a custom plugin to log the BrowserStack session.
   // config.reporters.push(['BrowserStack', 'blackbaud-browserstack']);
