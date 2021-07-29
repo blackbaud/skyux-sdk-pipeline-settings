@@ -100,7 +100,7 @@ module.exports = function (config) {
   });
 
   // Create a custom plugin to log the BrowserStack session.
-  config.reporters.push('blackbaud-browserstack');
+  config.reporters.push(['BrowserStack', 'blackbaud-browserstack']);
   config.plugins.push({
     'reporter:blackbaud-browserstack': [
       'type',
