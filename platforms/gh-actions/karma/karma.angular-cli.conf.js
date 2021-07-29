@@ -100,13 +100,13 @@ module.exports = function (config) {
   });
 
   // Create a custom plugin to log the BrowserStack session.
-  config.reporters.push(['BrowserStack', 'blackbaud-browserstack']);
-  config.plugins.push({
-    'reporter:blackbaud-browserstack': [
-      'type',
-      function (/* BrowserStack:sessionMapping */ sessions) {
-        this.onBrowserComplete = (browser) => logBrowserStackSession(sessions[browser.id]);
-      }
-    ]
-  });
+  // config.reporters.push(['BrowserStack', 'blackbaud-browserstack']);
+  // config.plugins.push({
+  //   'reporter:blackbaud-browserstack': [
+  //     'type',
+  //     function (/* BrowserStack:sessionMapping */ sessions) {
+  //       this.onBrowserComplete = (browser) => logBrowserStackSession(sessions[browser.id]);
+  //     }
+  //   ]
+  // });
 };
