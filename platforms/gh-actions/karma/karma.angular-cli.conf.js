@@ -105,9 +105,7 @@ module.exports = function (config) {
     'reporter:blackbaud-browserstack': [
       'type',
       function (/* BrowserStack:sessionMapping */ sessions) {
-        this.onBrowserComplete = (browser) => {
-          logBrowserStackSession(sessions[browser.id]);
-        };
+        this.onBrowserComplete = (browser) => logBrowserStackSession(sessions[browser.id]);
       }
     ]
   });
