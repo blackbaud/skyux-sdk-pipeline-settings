@@ -1,3 +1,6 @@
+// Karma configuration file, see link for more information
+// https://karma-runner.github.io/1.0/config/configuration-file.html
+
 const getBrowserSet = require('../../utility/browser-set');
 const logBrowserStackSession = require('../../utility/log-browserstack-session');
 
@@ -32,7 +35,6 @@ function applyBrowserStackConfig(config) {
     throw new Error('Please provide a BrowserStack access key!');
   }
 
-  // Apply BrowserStack overrides.
   const customLaunchers = getBrowserStackLaunchers();
 
   config.set({
@@ -62,8 +64,8 @@ function applyBrowserStackConfig(config) {
   });
 }
 
+// Default config provided by Angular CLI.
 module.exports = function (config) {
-  // Default config provided by Angular CLI.
   config.set({
     basePath: '',
     frameworks: ['jasmine', '@angular-devkit/build-angular'],
