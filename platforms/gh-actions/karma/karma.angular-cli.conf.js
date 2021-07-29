@@ -1,7 +1,7 @@
 const getBrowserSet = require('../../utility/browser-set');
 const logBrowserStackSession = require('../../utility/log-browserstack-session');
 
-function getBrowserLaunchers() {
+function getBrowserStackLaunchers() {
   const browserSet = getBrowserSet('paranoid');
 
   const launchers = {};
@@ -16,6 +16,8 @@ function getBrowserLaunchers() {
 
     launchers[key] = browser;
   }
+
+  return launchers;
 }
 
 module.exports = function (config) {
@@ -80,7 +82,9 @@ module.exports = function (config) {
   }
 
   // Apply BrowserStack overrides.
-  const customLaunchers = getBrowserLaunchers();
+  const customLaunchers = getBrowserStackLaunchers();
+
+  console.log('Custom BrowserStack launchers generated:', customLaunchers);
 
   config.set({
     customLaunchers,
