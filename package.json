@@ -12,6 +12,8 @@
   "author": "Blackbaud, Inc.",
   "license": "ISC",
   "dependencies": {
+    "browserstack-local": "1.4.8",
+    "karma-browserstack-launcher": "1.6.0",
     "karma-junit-reporter": "2.0.1",
     "puppeteer": "8.0.0"
   }
