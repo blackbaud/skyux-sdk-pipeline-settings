@@ -1,26 +1,27 @@
-function getCodeCoverageThresholdPercent(threshold) {
-  switch (threshold) {
-    default:
-    case 'none':
-      return 0;
-
-    case 'standard':
-      return 80;
-
-    case 'strict':
-      return 100;
-  }
-}
-
-function applyCodeCoverageThresholdConfig(config, threshold) {
-  const thresholdPercent = getCodeCoverageThresholdPercent(threshold);
+function applyCodeCoverageThresholdConfig(config) {
+  const branches = parseInt(
+    process.env.SKY_UX_CODE_COVERAGE_THRESHOLD_BRANCHES || '0',
+    10
+  );
+  const functions = parseInt(
+    process.env.SKY_UX_CODE_COVERAGE_THRESHOLD_FUNCTIONS || '0',
+    10
+  );
+  const lines = parseInt(
+    process.env.SKY_UX_CODE_COVERAGE_THRESHOLD_LINES || '0',
+    10
+  );
+  const statements = parseInt(
+    process.env.SKY_UX_CODE_COVERAGE_THRESHOLD_STATEMENTS || '0',
+    10
+  );
 
   config.coverageReporter.check = {
     global: {
-      branches: thresholdPercent,
-      functions: thresholdPercent,
-      lines: thresholdPercent,
-      statements: thresholdPercent,
+      branches,
+      functions,
+      lines,
+      statements,
     },
   };
 }
