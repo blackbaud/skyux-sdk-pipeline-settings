@@ -1,6 +1,8 @@
 // Karma configuration file, see link for more information
 // https://karma-runner.github.io/1.0/config/configuration-file.html
 
+const applyBrowserStackKarmaConfig = require('../../utility/apply-browserstack-karma-config');
+
 function applyJUnitConfig(config) {
   config.reporters.push('junit');
 
@@ -26,4 +28,8 @@ module.exports = function (config) {
       ]
     }
   });
+
+  if (process.env.SKY_UX_CODE_COVERAGE_BROWSER_SET) {
+    applyBrowserStackKarmaConfig(config);
+  }
 };
