@@ -1,21 +1,24 @@
 const applyDefaultConfig = require('../../shared/karma/karma.angular-cli.conf');
+const applyCodeCoverageThresholdConfig = require('../../utility/apply-code-coverage-threshold-config');
 const applyBrowserStackKarmaConfig = require('../../utility/apply-browserstack-karma-config');
 
 module.exports = function (config) {
   applyDefaultConfig(config);
 
-  // Add support for Codecov.
+  // Add support for Codecov reports.
   config.coverageReporter.reporters.push({ type: 'lcovonly' });
 
-  // Apply code coverage thresholds.
-  config.coverageReporter.check = {
-    global: {
-      branches: 100,
-      functions: 100,
-      lines: 100,
-      statements: 100,
-    },
-  };
+  applyCodeCoverageThresholdConfig(
+    config,
+    process.env.SKY_UX_CODE_COVERAGE_THRESHOLD
+  );
 
-  applyBrowserStackKarmaConfig(config);
+  const browserSetKey = process.env.SKY_UX_CODE_COVERAGE_BROWSER_SET;
+  if (browserSetKey) {
+    applyBrowserStackKarmaConfig(config, browserSetKey);
+  } else {
+    console.log(
+      'A valid browser set was not defined in the pipeline; skipping BrowserStack testing.'
+    );
+  }
 };

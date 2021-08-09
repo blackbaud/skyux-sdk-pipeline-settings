@@ -12,9 +12,9 @@ exports.config = {
         '--headless',
         '--ignore-certificate-errors',
         '--no-sandbox',
-        '--start-maximized'
-      ]
-    }
+        '--start-maximized',
+      ],
+    },
   },
   params: {
     skyuxVisualRegressionTestingConfig: {
@@ -25,8 +25,8 @@ exports.config = {
         createdPathDiff: 'screenshots-created-diff',
         baseline: true,
         width: 1000,
-        height: 800
-      }
-    }
-  }
+        height: 800,
+      },
+    },
+  },
 };

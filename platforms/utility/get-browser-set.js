@@ -2,44 +2,34 @@ const bsBrowserChrome = {
   base: 'BrowserStack',
   browser: 'Chrome',
   os: 'Windows',
-  os_version: '10'
+  os_version: '10',
 };
 
 const bsBrowserEdge = {
   base: 'BrowserStack',
   browser: 'Edge',
   os: 'Windows',
-  os_version: '10'
+  os_version: '10',
 };
 
 const bsBrowserFirefox = {
   base: 'BrowserStack',
   browser: 'Firefox',
   os: 'OS X',
-  os_version: 'Catalina'
+  os_version: 'Catalina',
 };
 
 const bsBrowserSafari = {
   base: 'BrowserStack',
   browser: 'Safari',
   os: 'OS X',
-  os_version: 'Catalina'
+  os_version: 'Catalina',
 };
 
 const browserSets = {
-  speedy: [
-    bsBrowserChrome
-  ],
-  quirky: [
-    bsBrowserChrome,
-    bsBrowserEdge
-  ],
-  paranoid: [
-    bsBrowserChrome,
-    bsBrowserEdge,
-    bsBrowserFirefox,
-    bsBrowserSafari
-  ]
+  speedy: [bsBrowserChrome],
+  quirky: [bsBrowserChrome, bsBrowserEdge],
+  paranoid: [bsBrowserChrome, bsBrowserEdge, bsBrowserFirefox, bsBrowserSafari],
 };
 
 function getBrowserSet(key) {

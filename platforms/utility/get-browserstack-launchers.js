@@ -5,7 +5,7 @@ const getBrowserSet = require('./get-browser-set');
  * @param {string} browserSetKey Can be one of 'paranoid', 'quirky', or 'speedy'.
  * @returns An object representing Karma browser launchers.
  */
-function getBrowserStackLaunchers(browserSetKey = 'paranoid') {
+function getBrowserStackLaunchers(browserSetKey) {
   const browserSet = getBrowserSet(browserSetKey);
 
   const launchers = {};
@@ -15,7 +15,7 @@ function getBrowserStackLaunchers(browserSetKey = 'paranoid') {
       browser.os || 'osDefault',
       browser.os_version || 'osVersionDefault',
       browser.browser || 'browserDefault',
-      browser.browser_version || 'browserVersionDefault'
+      browser.browser_version || 'browserVersionDefault',
     ].join('_');
 
     launchers[key] = browser;
