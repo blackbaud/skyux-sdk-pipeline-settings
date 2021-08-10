@@ -16,6 +16,14 @@ function applyCodeCoverageThresholdConfig(config) {
     10
   );
 
+  console.log(`
+Code coverage thresholds set to:
+ - branches ${branches}%
+ - functions ${functions}%
+ - lines ${lines}%
+ - statements ${statements}%
+`);
+
   config.coverageReporter.check = {
     global: {
       branches,
