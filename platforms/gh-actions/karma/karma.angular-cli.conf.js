@@ -8,6 +8,24 @@ module.exports = function (config) {
   // Add support for Codecov reports.
   config.coverageReporter.reporters.push({ type: 'lcovonly' });
 
-  applyCodeCoverageThresholdConfig(config);
+  applyCodeCoverageThresholdConfig(config, {
+    branches: parseInt(
+      process.env.SKY_UX_CODE_COVERAGE_THRESHOLD_BRANCHES || '0',
+      10
+    ),
+    functions: parseInt(
+      process.env.SKY_UX_CODE_COVERAGE_THRESHOLD_FUNCTIONS || '0',
+      10
+    ),
+    lines: parseInt(
+      process.env.SKY_UX_CODE_COVERAGE_THRESHOLD_LINES || '0',
+      10
+    ),
+    statements: parseInt(
+      process.env.SKY_UX_CODE_COVERAGE_THRESHOLD_STATEMENTS || '0',
+      10
+    ),
+  });
+
   applyBrowserStackKarmaConfig(config);
 };
