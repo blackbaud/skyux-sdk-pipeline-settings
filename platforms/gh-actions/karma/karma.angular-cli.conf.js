@@ -27,5 +27,8 @@ module.exports = function (config) {
     ),
   });
 
-  applyBrowserStackKarmaConfig(config);
+  applyBrowserStackKarmaConfig(
+    config,
+    process.env.SKY_UX_CODE_COVERAGE_BROWSER_SET
+  );
 };

@@ -31,5 +31,12 @@ module.exports = function (config) {
       {}
     )
   );
-  applyBrowserStackKarmaConfig(config);
+  applyBrowserStackKarmaConfig(
+    config,
+    lodashGet(
+      skyuxConfig,
+      'pipelineSettings.vsts.testSettings.unit.browserSet',
+      {}
+    )
+  );
 };
