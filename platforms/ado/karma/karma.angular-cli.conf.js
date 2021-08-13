@@ -23,6 +23,7 @@ module.exports = function (config) {
 
   applyDefaultConfig(config);
   applyJUnitConfig(config);
+
   applyCodeCoverageThresholdConfig(
     config,
     lodashGet(
@@ -31,12 +32,13 @@ module.exports = function (config) {
       {}
     )
   );
+
   applyBrowserStackKarmaConfig(
     config,
     lodashGet(
       skyuxConfig,
       'pipelineSettings.vsts.testSettings.unit.browserSet',
-      {}
+      undefined
     )
   );
 };
