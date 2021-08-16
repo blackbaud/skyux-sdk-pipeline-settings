@@ -2,10 +2,13 @@
 // https://github.com/angular/protractor/blob/master/lib/config.ts
 
 const { SpecReporter, StacktraceOption } = require('jasmine-spec-reporter');
+const path = require('path');
+
+const projectRoot = process.env.PROJECT_ROOT || '';
 
 exports.config = {
   allScriptsTimeout: 11000,
-  specs: ['./src/**/*.e2e-spec.ts'],
+  specs: [path.join(process.cwd(), projectRoot, 'e2e/src/**/*.e2e-spec.ts')],
   capabilities: {
     chromeOptions: {
       binary: require('puppeteer').executablePath(),
@@ -31,7 +34,7 @@ exports.config = {
   },
   onPrepare() {
     require('ts-node').register({
-      project: require('path').join(__dirname, './tsconfig.json'),
+      project: path.join(projectRoot, 'e2e/tsconfig.json'),
     });
     jasmine.getEnv().addReporter(
       new SpecReporter({
