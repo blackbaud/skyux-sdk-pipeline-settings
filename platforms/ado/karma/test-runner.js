@@ -10,7 +10,7 @@ function runCodeCoverage() {
     process.env.BROWSER_STACK_USERNAME = argv['browserstack-username'];
     process.env.BROWSER_STACK_ACCESS_KEY = argv['browserstack-access-key'];
     process.env.BROWSER_STACK_BUILD_ID = argv['browserstack-build-id'];
-    process.env.BROWSER_STACK_PROJECT = projectName;
+    process.env.BROWSER_STACK_PROJECT = argv['browserstack-project'];
 
     const result = crossSpawn.sync(
       'npx',
