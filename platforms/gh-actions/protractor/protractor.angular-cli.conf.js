@@ -12,7 +12,6 @@ exports.config = {
   capabilities: {
     browserName: 'chrome',
     chromeOptions: {
-      binary: require('puppeteer').executablePath(),
       args: [
         '--disable-dev-shm-usage',
         '--disable-extensions',
