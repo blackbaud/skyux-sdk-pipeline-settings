@@ -10,6 +10,7 @@ exports.config = {
   allScriptsTimeout: 11000,
   specs: [path.join(process.cwd(), projectRoot, 'e2e/src/**/*.e2e-spec.ts')],
   capabilities: {
+    browserName: 'chrome',
     chromeOptions: {
       binary: require('puppeteer').executablePath(),
       args: [
