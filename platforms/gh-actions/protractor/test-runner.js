@@ -14,10 +14,12 @@ function runE2eTests() {
         '@angular/cli',
         'ng',
         'e2e',
-        '--protractor-config=./node_modules/@skyux-sdk/pipeline-settings/platforms/gh-actions/protractor/protractor.angular-cli.conf.js',
+        '--protractor-config=./node_modules/@skyux-sdk/pipeline-settings/platforms/ado/protractor/protractor.angular-cli.conf.js',
       ],
       { stdio: 'inherit', cwd: process.cwd() }
     );
+
+    console.log('RESULT:', result);
 
     if (result.exit) {
       console.log('The command `ng e2e` failed.');
