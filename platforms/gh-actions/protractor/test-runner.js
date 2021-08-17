@@ -5,7 +5,7 @@ const argv = minimist(process.argv.slice(2));
 
 function runE2eTests() {
   try {
-    process.env.SKY_UX_PROTRACTOR_PROJECT_ROOT = argv['project-root'];
+    process.env.SKY_UX_PROTRACTOR_PROJECT_ROOT = argv['project-root'] || '';
 
     const result = crossSpawn.sync(
       'npx',
