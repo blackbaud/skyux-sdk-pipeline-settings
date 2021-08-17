@@ -27,7 +27,7 @@ function runCodeCoverage() {
       { stdio: 'inherit', cwd: process.cwd() }
     );
 
-    if (result.exit) {
+    if (result.status === 1) {
       console.log('The command `ng test` failed.');
       process.exit(1);
     }

@@ -19,9 +19,7 @@ function runE2eTests() {
       { stdio: 'inherit', cwd: process.cwd() }
     );
 
-    console.log('RESULT:', result);
-
-    if (result.exit) {
+    if (result.status === 1) {
       console.log('The command `ng e2e` failed.');
       process.exit(1);
     }
