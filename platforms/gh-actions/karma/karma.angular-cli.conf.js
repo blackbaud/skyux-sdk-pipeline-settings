@@ -29,6 +29,12 @@ module.exports = function (config) {
 
   applyBrowserStackKarmaConfig(
     config,
-    process.env.SKY_UX_CODE_COVERAGE_BROWSER_SET
+    process.env.SKY_UX_CODE_COVERAGE_BROWSER_SET,
+    {
+      username: process.env.BROWSER_STACK_USERNAME,
+      accessKey: process.env.BROWSER_STACK_ACCESS_KEY,
+      buildId: process.env.BROWSER_STACK_BUILD_ID,
+      project: process.env.BROWSER_STACK_PROJECT,
+    }
   );
 };

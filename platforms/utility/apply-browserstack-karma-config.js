@@ -1,12 +1,11 @@
 const getBrowserStackLaunchers = require('./get-browserstack-launchers');
 const logBrowserStackSession = require('./log-browserstack-session');
 
-function applyBrowserStackKarmaConfig(karmaConfig, codeCoverageBrowserSet) {
-  const bsUsername = process.env.BROWSER_STACK_USERNAME;
-  const bsAccessKey = process.env.BROWSER_STACK_ACCESS_KEY;
-  const bsBuildId = process.env.BROWSER_STACK_BUILD_ID;
-  const bsProject = process.env.BROWSER_STACK_PROJECT;
-
+function applyBrowserStackKarmaConfig(
+  karmaConfig,
+  codeCoverageBrowserSet,
+  browserStackConfig
+) {
   if (!codeCoverageBrowserSet) {
     console.log(
       'A valid browser set was not defined in the pipeline; skipping BrowserStack testing.'
@@ -14,11 +13,11 @@ function applyBrowserStackKarmaConfig(karmaConfig, codeCoverageBrowserSet) {
     return;
   }
 
-  if (!bsUsername || bsUsername === 'undefined') {
+  if (!browserStackConfig.username) {
     throw new Error('Please provide a BrowserStack username!');
   }
 
-  if (!bsAccessKey || bsAccessKey === 'undefined') {
+  if (!browserStackConfig.accessKey) {
     throw new Error('Please provide a BrowserStack access key!');
   }
 
@@ -28,12 +27,12 @@ function applyBrowserStackKarmaConfig(karmaConfig, codeCoverageBrowserSet) {
     customLaunchers,
     browsers: Object.keys(customLaunchers),
     browserStack: {
-      accessKey: bsAccessKey,
-      build: bsBuildId,
+      accessKey: browserStackConfig.accessKey,
+      build: browserStackConfig.buildId,
       enableLoggingForApi: true,
       name: 'ng test',
-      project: bsProject,
-      username: bsUsername,
+      project: browserStackConfig.project,
+      username: browserStackConfig.username,
     },
   });
 

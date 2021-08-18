@@ -29,16 +29,28 @@ module.exports = function (config) {
     lodashGet(
       skyuxConfig,
       'pipelineSettings.vsts.testSettings.unit.codeCoverageThreshold',
-      {}
+      {
+        branches: 0,
+        functions: 0,
+        lines: 0,
+        statements: 0,
+      }
     )
   );
 
   applyBrowserStackKarmaConfig(
     config,
-    lodashGet(
-      skyuxConfig,
-      'pipelineSettings.vsts.testSettings.unit.browserSet',
-      undefined
-    )
+    process.env.SKY_UX_CODE_COVERAGE_BROWSER_SET ||
+      lodashGet(
+        skyuxConfig,
+        'pipelineSettings.vsts.testSettings.unit.browserSet',
+        undefined
+      ),
+    {
+      username: process.env.BROWSER_STACK_USERNAME,
+      accessKey: process.env.BROWSER_STACK_ACCESS_KEY,
+      buildId: process.env.BROWSER_STACK_BUILD_ID,
+      project: process.env.BROWSER_STACK_PROJECT,
+    }
   );
 };
