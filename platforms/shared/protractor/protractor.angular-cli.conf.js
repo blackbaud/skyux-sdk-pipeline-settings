@@ -96,17 +96,18 @@ function getConfig() {
     // };
 
     config.capabilities = {
+      'browserstack.enable-logging-for-api': true,
       'bstack:options': {
         os: 'Windows',
         osVersion: '10',
         projectName: process.env.BROWSER_STACK_PROJECT,
         buildName: process.env.BROWSER_STACK_BUILD_ID,
         sessionName: 'ng e2e',
-        local: 'true',
-        debug: 'true',
+        local: true,
+        localIdentifier: id,
+        debug: true,
         consoleLogs: 'verbose',
-        networkLogs: 'true',
-        seleniumVersion: '3.14.0',
+        networkLogs: true,
         userName: process.env.BROWSER_STACK_USERNAME,
         accessKey: process.env.BROWSER_STACK_ACCESS_KEY,
       },
