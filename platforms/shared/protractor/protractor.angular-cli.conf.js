@@ -11,6 +11,19 @@ const logBrowserStackSession = require('../../utility/log-browserstack-session')
 // This is what ties the tests to the local tunnel that's created
 const id = 'skyux-spa-' + new Date().getTime();
 
+function commonOnPrepare(projectRoot) {
+  require('ts-node').register({
+    project: path.join(projectRoot, 'e2e/tsconfig.json'),
+  });
+  jasmine.getEnv().addReporter(
+    new SpecReporter({
+      spec: {
+        displayStacktrace: StacktraceOption.PRETTY,
+      },
+    })
+  );
+}
+
 function getConfig() {
   const projectRoot = process.env.SKY_UX_PROTRACTOR_PROJECT_ROOT || '';
 
@@ -41,16 +54,7 @@ function getConfig() {
       print: function () {},
     },
     onPrepare() {
-      require('ts-node').register({
-        project: path.join(projectRoot, 'e2e/tsconfig.json'),
-      });
-      jasmine.getEnv().addReporter(
-        new SpecReporter({
-          spec: {
-            displayStacktrace: StacktraceOption.PRETTY,
-          },
-        })
-      );
+      commonOnPrepare(projectRoot);
     },
     params: {
       skyuxVisualRegressionTestingConfig: {
@@ -136,7 +140,7 @@ function getConfig() {
     // Used to grab the Browserstack session
     config.onPrepare = () =>
       new Promise((resolve, reject) => {
-        require('ts-node').register({ ignore: false });
+        commonOnPrepare(projectRoot);
 
         browser.driver
           .getSession()
@@ -148,7 +152,7 @@ function getConfig() {
       });
 
     // Used to close the Browserstack tunnel
-    config.afterLaunc = () =>
+    config.afterLaunch = () =>
       new Promise((resolve) => {
         if (exports.bsLocal) {
           console.log('Closing Browserstack connection.');
