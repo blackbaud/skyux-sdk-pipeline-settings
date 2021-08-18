@@ -14,11 +14,11 @@ function applyBrowserStackKarmaConfig(karmaConfig, codeCoverageBrowserSet) {
     return;
   }
 
-  if (!bsUsername) {
-    throw Error('Please provide a BrowserStack username!');
+  if (!bsUsername || bsUsername === 'undefined') {
+    throw new Error('Please provide a BrowserStack username!');
   }
 
-  if (!bsAccessKey) {
+  if (!bsAccessKey || bsAccessKey === 'undefined') {
     throw new Error('Please provide a BrowserStack access key!');
   }
 
