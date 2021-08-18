@@ -169,6 +169,8 @@ function getConfig() {
       });
   }
 
+  console.log('Running protractor with config:\n', config);
+
   return config;
 }
 
