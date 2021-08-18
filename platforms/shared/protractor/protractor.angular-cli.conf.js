@@ -123,20 +123,27 @@ function getConfig() {
 
     config.beforeLaunch = function () {
       return new Promise(function (resolve, reject) {
+        const bsConfig = {
+          key: process.env.BROWSER_STACK_ACCESS_KEY,
+          onlyAutomate: true,
+          forceLocal: true,
+          force: true,
+          localIdentifier: id,
+          verbose: true,
+          'enable-logging-for-api': true,
+        };
+
         exports.bsLocal = new browserstackLocal.Local();
 
-        exports.bsLocal.start(
-          { key: exports.config['browserstackKey'] },
-          function (error) {
-            if (error) {
-              console.log('Error connecting to BrowserStack.');
-              reject(error);
-            } else {
-              console.log('Connected to Browserstack. Beginning e2e tests.');
-              resolve();
-            }
+        exports.bsLocal.start(bsConfig, function (error) {
+          if (error) {
+            console.log('Error connecting to BrowserStack.');
+            reject(error);
+          } else {
+            console.log('Connected to Browserstack. Beginning e2e tests.');
+            resolve();
           }
-        );
+        });
       });
     };
 
