@@ -71,20 +71,39 @@ function getConfig() {
     config.browserstackKey = process.env.BROWSER_STACK_ACCESS_KEY;
     config.directConnect = false;
 
+    // config.capabilities = {
+    //   name: 'ng e2e',
+    //   build: process.env.BROWSER_STACK_BUILD_ID,
+    //   project: process.env.BROWSER_STACK_PROJECT,
+    //   browserName: 'Chrome',
+    //   browserVersion: 'latest',
+    //   'browserstack.os': 'Windows',
+    //   'browserstack.osVersion': '10',
+    //   'browserstack.local': true,
+    //   'browserstack.localIdentifier': id,
+    //   'browserstack.networkLogs': true,
+    //   'browserstack.debug': true,
+    //   'browserstack.console': 'verbose',
+    //   'browserstack.enable-logging-for-api': true,
+    // };
+
     config.capabilities = {
-      name: 'ng e2e',
-      build: process.env.BROWSER_STACK_BUILD_ID,
-      project: process.env.BROWSER_STACK_PROJECT,
-      browser: 'chrome',
-      browser_version: 'latest',
-      os: 'Windows',
-      os_version: '10',
-      'browserstack.local': true,
-      'browserstack.localIdentifier': id,
-      'browserstack.networkLogs': true,
-      'browserstack.debug': true,
-      'browserstack.console': 'verbose',
-      'browserstack.enable-logging-for-api': true,
+      'bstack:options': {
+        os: 'Windows',
+        osVersion: '10',
+        projectName: process.env.BROWSER_STACK_PROJECT,
+        buildName: process.env.BROWSER_STACK_BUILD_ID,
+        sessionName: 'ng e2e',
+        local: 'true',
+        debug: 'true',
+        consoleLogs: 'verbose',
+        networkLogs: 'true',
+        seleniumVersion: '3.14.0',
+        userName: process.env.BROWSER_STACK_USERNAME,
+        accessKey: process.env.BROWSER_STACK_ACCESS_KEY,
+      },
+      browserName: 'Chrome',
+      browserVersion: 'latest',
     };
 
     config.beforeLaunch = function () {
