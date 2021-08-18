@@ -6,9 +6,13 @@ const argv = minimist(process.argv.slice(2));
 function runE2eTests() {
   try {
     const platform = argv['platform'];
-
     if (!platform) {
       throw new Error('The argument `--platform` is required!');
+    }
+
+    const projectName = argv['project-name'];
+    if (!projectName) {
+      throw new Error('The argument `--project-name` is required!');
     }
 
     process.env.SKY_UX_PROTRACTOR_PROJECT_ROOT = argv['project-root'] || '';
@@ -20,6 +24,7 @@ function runE2eTests() {
         '@angular/cli',
         'ng',
         'e2e',
+        projectName,
         `--protractor-config=./node_modules/@skyux-sdk/pipeline-settings/platforms/${platform}/protractor/protractor.angular-cli.conf.js`,
       ],
       { stdio: 'inherit', cwd: process.cwd() }
