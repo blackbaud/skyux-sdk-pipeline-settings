@@ -26,6 +26,21 @@ function runCodeCoverage() {
         argv['code-coverage-threshold-branches'];
     }
 
+    if (argv['code-coverage-threshold-functions']) {
+      process.env.SKY_UX_CODE_COVERAGE_THRESHOLD_FUNCTIONS =
+        argv['code-coverage-threshold-functions'];
+    }
+
+    if (argv['code-coverage-threshold-lines']) {
+      process.env.SKY_UX_CODE_COVERAGE_THRESHOLD_LINES =
+        argv['code-coverage-threshold-lines'];
+    }
+
+    if (argv['code-coverage-threshold-statements']) {
+      process.env.SKY_UX_CODE_COVERAGE_THRESHOLD_STATEMENTS =
+        argv['code-coverage-threshold-statements'];
+    }
+
     if (argv['browserstack-username']) {
       process.env.BROWSER_STACK_USERNAME = argv['browserstack-username'];
     }
