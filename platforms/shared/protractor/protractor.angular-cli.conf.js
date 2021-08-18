@@ -1,10 +1,11 @@
+/*global browser*/
 // Protractor configuration file, see link for more information
 // https://github.com/angular/protractor/blob/master/lib/config.ts
 
 const browserstackLocal = require('browserstack-local');
 const { SpecReporter, StacktraceOption } = require('jasmine-spec-reporter');
 const path = require('path');
-const { browser } = require('protractor');
+// const { browser } = require('protractor');
 const logBrowserStackSession = require('../../utility/log-browserstack-session');
 
 // This is what ties the tests to the local tunnel that's created
