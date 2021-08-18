@@ -81,6 +81,8 @@ function getConfig() {
   if (process.env.BROWSER_STACK_USERNAME) {
     delete config.baseUrl;
 
+    config.SELENIUM_PROMISE_MANAGER = true;
+
     config.browserstackUser = process.env.BROWSER_STACK_USERNAME;
     config.browserstackKey = process.env.BROWSER_STACK_ACCESS_KEY;
     config.directConnect = false;
@@ -119,6 +121,20 @@ function getConfig() {
     //   },
     //   browserName: 'Chrome',
     //   browserVersion: 'latest',
+    // };
+
+    // Code to mark the status of test on BrowserStack based on test assertions
+    // config.onComplete = function (passed) {
+    //   if (!passed) {
+    //     browser.executeScript(
+    //       'browserstack_executor: {"action": "setSessionStatus", "arguments": {"status":"failed","reason": "At least 1 assertion has failed"}}'
+    //     );
+    //   }
+    //   if (passed) {
+    //     browser.executeScript(
+    //       'browserstack_executor: {"action": "setSessionStatus", "arguments": {"status":"passed","reason": "All assertions passed"}}'
+    //     );
+    //   }
     // };
 
     config.beforeLaunch = function () {
