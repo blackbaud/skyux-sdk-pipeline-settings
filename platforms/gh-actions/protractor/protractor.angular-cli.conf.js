@@ -1,3 +1,3 @@
-const sharedConfig = require('../../shared/protractor/protractor.angular-cli.conf');
+const getConfig = require('../../shared/protractor/protractor.angular-cli.conf');
 
-exports.config = sharedConfig.config;
+exports.config = getConfig();
