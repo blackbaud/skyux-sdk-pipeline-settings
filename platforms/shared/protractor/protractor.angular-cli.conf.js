@@ -69,6 +69,8 @@ function getConfig() {
   if (process.env.BROWSER_STACK_USERNAME) {
     config.browserstackUser = process.env.BROWSER_STACK_USERNAME;
     config.browserstackKey = process.env.BROWSER_STACK_ACCESS_KEY;
+    config.directConnect = false;
+
     config.capabilities = {
       name: 'ng e2e',
       build: process.env.BROWSER_STACK_BUILD_ID,
