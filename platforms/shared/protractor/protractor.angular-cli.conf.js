@@ -15,6 +15,7 @@ function commonOnPrepare(projectRoot) {
   require('ts-node').register({
     project: path.join(projectRoot, 'e2e/tsconfig.json'),
   });
+
   jasmine.getEnv().addReporter(
     new SpecReporter({
       spec: {
@@ -26,6 +27,8 @@ function commonOnPrepare(projectRoot) {
 
 function getConfig() {
   const projectRoot = process.env.SKY_UX_PROTRACTOR_PROJECT_ROOT || '';
+
+  console.log(`Starting Protractor at project root: "${projectRoot}"`);
 
   const config = {
     allScriptsTimeout: 11000,
@@ -139,16 +142,17 @@ function getConfig() {
 
     // Used to grab the Browserstack session
     config.onPrepare = () =>
-      new Promise((resolve, reject) => {
+      new Promise((resolve) => {
         commonOnPrepare(projectRoot);
+        resolve();
 
-        browser.driver
-          .getSession()
-          .then((session) => {
-            logBrowserStackSession(session.getId());
-            resolve();
-          })
-          .catch(reject);
+        // browser.driver
+        //   .getSession()
+        //   .then((session) => {
+        //     logBrowserStackSession(session.getId());
+        //     resolve();
+        //   })
+        //   .catch(reject);
       });
 
     // Used to close the Browserstack tunnel
