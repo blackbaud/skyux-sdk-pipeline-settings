@@ -36,6 +36,13 @@ function applyBrowserStackKarmaConfig(
     },
   });
 
+  karmaConfig.set({
+    browserDisconnectTimeout: 60000,
+    browserDisconnectTolerance: 2,
+    browserNoActivityTimeout: 30000,
+    captureTimeout: 60000,
+  });
+
   karmaConfig.plugins.push(require('karma-browserstack-launcher'));
 
   // Create a custom plugin to log the BrowserStack session.
