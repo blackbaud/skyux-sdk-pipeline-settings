@@ -5,7 +5,16 @@ const argv = minimist(process.argv.slice(2));
 
 function runCodeCoverage() {
   try {
+    const platform = argv['platform'];
     const projectName = argv['project-name'];
+
+    if (!platform) {
+      throw new Error('The argument `--platform` is required!');
+    }
+
+    if (!projectName) {
+      throw new Error('The argument `--project-name` is required!');
+    }
 
     process.env.BROWSER_STACK_USERNAME = argv['browserstack-username'];
     process.env.BROWSER_STACK_ACCESS_KEY = argv['browserstack-access-key'];
@@ -20,15 +29,15 @@ function runCodeCoverage() {
         'ng',
         'test',
         projectName,
-        '--karma-config=./node_modules/@skyux-sdk/pipeline-settings/platforms/ado/karma/karma.angular-cli.conf.js',
+        `--karma-config=./node_modules/@skyux-sdk/pipeline-settings/platforms/${platform}/karma/karma.angular-cli.conf.js`,
         '--watch=false',
         '--code-coverage',
       ],
       { stdio: 'inherit', cwd: process.cwd() }
     );
 
-    if (result.status === 1) {
-      console.log('The command `ng test` failed.');
+    if (result.status !== 0) {
+      console.log(`Karma failed with exit code (${result.status}).`);
       process.exit(1);
     }
   } catch (err) {

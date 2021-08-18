@@ -5,6 +5,12 @@ const argv = minimist(process.argv.slice(2));
 
 function runE2eTests() {
   try {
+    const platform = argv['platform'];
+
+    if (!platform) {
+      throw new Error('The argument `--platform` is required!');
+    }
+
     process.env.SKY_UX_PROTRACTOR_PROJECT_ROOT = argv['project-root'] || '';
 
     const result = crossSpawn.sync(
@@ -14,13 +20,13 @@ function runE2eTests() {
         '@angular/cli',
         'ng',
         'e2e',
-        '--protractor-config=./node_modules/@skyux-sdk/pipeline-settings/platforms/gh-actions/protractor/protractor.angular-cli.conf.js',
+        `--protractor-config=./node_modules/@skyux-sdk/pipeline-settings/platforms/${platform}/protractor/protractor.angular-cli.conf.js`,
       ],
       { stdio: 'inherit', cwd: process.cwd() }
     );
 
-    if (result.status === 1) {
-      console.log('The command `ng e2e` failed.');
+    if (result.status !== 0) {
+      console.log(`Protractor failed with exit code(${result.status}).`);
       process.exit(1);
     }
   } catch (err) {
