@@ -7,7 +7,7 @@ const { SpecReporter, StacktraceOption } = require('jasmine-spec-reporter');
 const path = require('path');
 const logBrowserStackSession = require('../../utility/log-browserstack-session');
 
-require('./fast-selenium');
+// require('./fast-selenium');
 
 // This is what ties the tests to the local tunnel that's created
 const id = 'skyux-lib-' + new Date().getTime();
