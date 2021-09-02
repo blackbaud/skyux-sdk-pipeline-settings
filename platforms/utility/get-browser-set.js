@@ -16,14 +16,14 @@ const bsBrowserFirefox = {
   base: 'BrowserStack',
   browser: 'Firefox',
   os: 'OS X',
-  os_version: 'Catalina',
+  os_version: 'Big Sur',
 };
 
 const bsBrowserSafari = {
   base: 'BrowserStack',
   browser: 'Safari',
   os: 'OS X',
-  os_version: 'Catalina',
+  os_version: 'Big Sur',
 };
 
 const browserSets = {
