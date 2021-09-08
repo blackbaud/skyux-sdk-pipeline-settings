@@ -28,9 +28,9 @@ module.exports = function (config) {
       subdir: '.',
       reporters: [{ type: 'html' }, { type: 'text-summary' }],
     },
-    reporters: ['dots'], // Angular sets this to 'progress' by default.
+    reporters: ['progress'],
     port: 9876,
-    colors: false, // Angular sets this to true by default.
+    colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: false, // Angular sets this to true by default.
     browsers: ['ChromeHeadless'], // Angular sets this to 'Chrome' by default.
