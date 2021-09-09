@@ -1,0 +1,4 @@
+# Ignore artifacts:
+.nyc_output
+node_modules
+package-lock.json
