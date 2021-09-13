@@ -36,5 +36,6 @@ module.exports = function (config) {
     browsers: ['ChromeHeadless'], // Angular sets this to 'Chrome' by default.
     singleRun: true, // Angular sets this to false by default.
     restartOnFileChange: false, // Angular sets this to true by default.
+    browserDisconnectTolerance: 3,
   });
 };
