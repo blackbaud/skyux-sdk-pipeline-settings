@@ -42,6 +42,7 @@ function runE2eTests() {
         'e2e',
         projectName,
         `--protractor-config=./node_modules/@skyux-sdk/pipeline-settings/platforms/${platform}/protractor/protractor.angular-cli.conf.js`,
+        '--webdriver-update=false'
       ],
       { stdio: 'inherit', cwd: process.cwd() }
     );
