@@ -9,7 +9,7 @@ function getConfig() {
 
   console.log(`Starting Protractor at project root: "${projectRoot}"`);
 
-  const config = {
+  let config = {
     allScriptsTimeout: 11000,
     specs: [path.join(process.cwd(), projectRoot, 'e2e/src/**/*.e2e-spec.ts')],
     capabilities: {
@@ -64,6 +64,58 @@ function getConfig() {
       },
     },
   };
+
+  // Apply BrowserStack overrides, if applicable.
+  if (process.env.BROWSER_STACK_USERNAME) {
+    const browserStackOverrides = {
+      browserstackUser: process.env.BROWSER_STACK_USERNAME,
+      browserstackKey: process.env.BROWSER_STACK_ACCESS_KEY,
+      capabilities: {
+        browserName: 'Chrome',
+        build: process.env.BROWSER_STACK_BUILD_ID,
+        name: 'ng e2e',
+        os: 'Windows',
+        os_version: '10',
+        project: process.env.BROWSER_STACK_PROJECT,
+        'browserstack.debug': 'true',
+        'browserstack.local': 'true',
+      },
+      directConnect: false,
+
+      beforeLaunch: function () {
+        console.log('Connecting to BrowserStack Local...');
+        return new Promise(function (resolve, reject) {
+          exports.bs_local = new require('browserstack-local').Local();
+          exports.bs_local.start(
+            { key: exports.config['browserstackKey'] },
+            function (error) {
+              if (error) return reject(error);
+              console.log('Connected. Now testing...');
+
+              resolve();
+            }
+          );
+        });
+      },
+
+      // Code to stop browserstack local after end of test
+      afterLaunch: function () {
+        return new Promise(function (resolve) {
+          exports.bs_local.stop(resolve);
+        });
+      },
+    };
+
+    config = require('lodash.mergewith')(
+      config,
+      browserStackOverrides,
+      function (originalValue, overrideValue) {
+        if (Array.isArray(originalValue)) {
+          return overrideValue;
+        }
+      }
+    );
+  }
 
   return config;
 }
