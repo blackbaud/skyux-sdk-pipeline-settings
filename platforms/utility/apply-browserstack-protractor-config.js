@@ -54,4 +54,4 @@ function applyBrowserStackProtractorConfig(config) {
   return config;
 }
 
-exports.applyBrowserStackProtractorConfig = applyBrowserStackProtractorConfig;
+module.exports = applyBrowserStackProtractorConfig;
