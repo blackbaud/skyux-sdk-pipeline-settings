@@ -1,12 +1,6 @@
-/*global browser*/
-
 const browserstack = require('browserstack-local');
-const { SpecReporter, StacktraceOption } = require('jasmine-spec-reporter');
 const mergeWith = require('lodash.mergewith');
-const path = require('path');
-
 const getConfig = require('../../shared/protractor/protractor.angular-cli.conf');
-const logBrowserStackSession = require('../../utility/log-browserstack-session');
 
 const commonConfig = getConfig();
 
@@ -26,9 +20,8 @@ const browserStackOverrides = {
     os: 'Windows',
     os_version: '10',
     project: process.env.BROWSER_STACK_PROJECT,
-    'browserstack.console': 'verbose',
-    'browserstack.debug': 'true',
     'browserstack.local': 'true',
+    'browserstack.debug': 'true',
   },
   directConnect: false,
   beforeLaunch: function () {
