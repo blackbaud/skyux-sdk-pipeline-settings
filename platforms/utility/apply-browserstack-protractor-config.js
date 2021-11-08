@@ -1,10 +1,14 @@
 const browserstack = require('browserstack-local');
 const mergeWith = require('lodash.mergewith');
 
+let bsLocal;
+
 function applyBrowserStackProtractorConfig(config) {
+  const browserStackKey = process.env.BROWSER_STACK_ACCESS_KEY;
+
   const browserStackOverrides = {
     browserstackUser: process.env.BROWSER_STACK_USERNAME,
-    browserstackKey: process.env.BROWSER_STACK_ACCESS_KEY,
+    browserstackKey: browserStackKey,
     capabilities: {
       browserName: 'Chrome',
       build: process.env.BROWSER_STACK_BUILD_ID,
@@ -20,23 +24,20 @@ function applyBrowserStackProtractorConfig(config) {
     beforeLaunch: function () {
       console.log('Connecting to BrowserStack Local...');
       return new Promise(function (resolve, reject) {
-        exports.bs_local = new browserstack.Local();
-        exports.bs_local.start(
-          { key: exports.config['browserstackKey'] },
-          function (error) {
-            if (error) return reject(error);
-            console.log('Connected. Now testing...');
+        bsLocal = new browserstack.Local();
+        bsLocal.start({ key: browserStackKey }, function (error) {
+          if (error) return reject(error);
+          console.log('Connected. Now testing...');
 
-            resolve();
-          }
-        );
+          resolve();
+        });
       });
     },
 
     // Code to stop browserstack local after end of test
     afterLaunch: function () {
       return new Promise(function (resolve) {
-        exports.bs_local.stop(resolve);
+        bsLocal.stop(resolve);
       });
     },
   };
