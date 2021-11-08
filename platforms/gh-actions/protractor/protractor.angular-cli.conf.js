@@ -1,6 +1,11 @@
 const browserstack = require('browserstack-local');
+const { SpecReporter, StacktraceOption } = require('jasmine-spec-reporter');
 const mergeWith = require('lodash.mergewith');
+const path = require('path');
+const { browser } = require('protractor');
+
 const getConfig = require('../../shared/protractor/protractor.angular-cli.conf');
+const logBrowserStackSession = require('../../utility/log-browserstack-session');
 
 const commonConfig = getConfig();
 
@@ -14,13 +19,46 @@ const browserStackOverrides = {
   browserstackUser: process.env.BROWSER_STACK_USERNAME,
   browserstackKey: process.env.BROWSER_STACK_ACCESS_KEY,
   capabilities: {
-    build: 'protractor-browserstack',
-    name: 'local_test',
-    browserName: 'chrome',
-    'browserstack.local': 'true',
+    build: process.env.BROWSER_STACK_BUILD_ID,
+    name: 'ng e2e',
+    browserName: 'Chrome',
+    os: 'Windows',
+    os_version: '10',
+    project: process.env.BROWSER_STACK_PROJECT,
+    'browserstack.console': 'verbose',
     'browserstack.debug': 'true',
+    'browserstack.enable-logging-for-api': true,
+    'browserstack.local': 'true',
+    'browserstack.networkLogs': true,
   },
   directConnect: false,
+  onPrepare: function () {
+    return new Promise((resolve, reject) => {
+      require('ts-node').register({
+        ignore: false,
+        project: path.join(
+          process.env.SKY_UX_PROTRACTOR_PROJECT_ROOT,
+          'e2e/tsconfig.json'
+        ),
+      });
+
+      jasmine.getEnv().addReporter(
+        new SpecReporter({
+          spec: {
+            displayStacktrace: StacktraceOption.PRETTY,
+          },
+        })
+      );
+
+      browser.driver
+        .getSession()
+        .then((session) => {
+          logBrowserStackSession(session.getId());
+          resolve();
+        })
+        .catch(reject);
+    });
+  },
   beforeLaunch: function () {
     console.log('Connecting local');
     return new Promise(function (resolve, reject) {
