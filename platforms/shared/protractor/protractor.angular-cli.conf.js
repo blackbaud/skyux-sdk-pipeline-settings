@@ -1,7 +1,9 @@
 // Protractor configuration file, see link for more information
 // https://github.com/angular/protractor/blob/master/lib/config.ts
 
+const browserstack = require('browserstack-local');
 const { SpecReporter, StacktraceOption } = require('jasmine-spec-reporter');
+const mergeWith = require('lodash.mergewith');
 const path = require('path');
 
 function getConfig() {
@@ -85,7 +87,7 @@ function getConfig() {
       beforeLaunch: function () {
         console.log('Connecting to BrowserStack Local...');
         return new Promise(function (resolve, reject) {
-          exports.bs_local = new require('browserstack-local').Local();
+          exports.bs_local = new browserstack.Local();
           exports.bs_local.start(
             { key: exports.config['browserstackKey'] },
             function (error) {
@@ -106,7 +108,7 @@ function getConfig() {
       },
     };
 
-    config = require('lodash.mergewith')(
+    config = mergeWith(
       config,
       browserStackOverrides,
       function (originalValue, overrideValue) {
