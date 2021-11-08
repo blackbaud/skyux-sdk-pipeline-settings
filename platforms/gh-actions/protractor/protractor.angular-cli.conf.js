@@ -1,8 +1,9 @@
+/*global browser*/
+
 const browserstack = require('browserstack-local');
 const { SpecReporter, StacktraceOption } = require('jasmine-spec-reporter');
 const mergeWith = require('lodash.mergewith');
 const path = require('path');
-const { browser } = require('protractor');
 
 const getConfig = require('../../shared/protractor/protractor.angular-cli.conf');
 const logBrowserStackSession = require('../../utility/log-browserstack-session');
