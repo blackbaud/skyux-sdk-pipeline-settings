@@ -34,7 +34,8 @@ function runE2eTests() {
     }
 
     process.env.VISUAL_BASELINES_ENABLE_BROWSERSTACK =
-      argv['visual-baselines-enable-browserstack'] === 'true';
+      argv['visual-baselines-enable-browserstack'] === 'true' ||
+      argv['visual-baselines-enable-browserstack'];
 
     const result = crossSpawn.sync(
       'npx',
