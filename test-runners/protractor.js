@@ -22,12 +22,7 @@ function runE2eTests() {
     }
 
     if (argv['browserstack-access-key']) {
-      console.log('[DEBUG] Set BrowserStack access key.');
       process.env.BROWSER_STACK_ACCESS_KEY = argv['browserstack-access-key'];
-    } else {
-      console.log('[DEBUG] Unset BrowserStack access key.');
-      // Clear out previous values if they exist.
-      delete process.env.BROWSER_STACK_ACCESS_KEY;
     }
 
     if (argv['browserstack-build-id']) {
@@ -37,6 +32,9 @@ function runE2eTests() {
     if (argv['browserstack-project']) {
       process.env.BROWSER_STACK_PROJECT = argv['browserstack-project'];
     }
+
+    process.env.VISUAL_BASELINES_ENABLE_BROWSERSTACK =
+      argv['visual-baselines-enable-browserstack'] === 'true';
 
     const result = crossSpawn.sync(
       'npx',
