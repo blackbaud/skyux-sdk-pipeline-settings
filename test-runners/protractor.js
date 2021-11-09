@@ -22,11 +22,10 @@ function runE2eTests() {
     }
 
     if (argv['browserstack-access-key']) {
-      console.log(
-        'SETTING BROWSER_STACK_ACCESS_KEY to:',
-        argv['browserstack-access-key']
-      );
       process.env.BROWSER_STACK_ACCESS_KEY = argv['browserstack-access-key'];
+    } else {
+      // Clear out previous values if they exist.
+      delete process.env.BROWSER_STACK_ACCESS_KEY;
     }
 
     if (argv['browserstack-build-id']) {
