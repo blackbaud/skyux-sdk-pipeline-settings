@@ -3,12 +3,10 @@ const mergeWith = require('lodash.mergewith');
 
 let bsLocal;
 
-function applyBrowserStackProtractorConfig(config) {
-  const browserStackKey = process.env.BROWSER_STACK_ACCESS_KEY;
-
+function applyBrowserStackProtractorConfig(protractorConfig, options) {
   const browserStackOverrides = {
-    browserstackUser: process.env.BROWSER_STACK_USERNAME,
-    browserstackKey: browserStackKey,
+    browserstackUser: options.browserStackUsername,
+    browserstackKey: options.browserStackKey,
     capabilities: {
       browserName: 'Chrome',
       chromeOptions: {
@@ -23,11 +21,11 @@ function applyBrowserStackProtractorConfig(config) {
           '--window-size=1000,800',
         ],
       },
-      build: process.env.BROWSER_STACK_BUILD_ID,
+      build: options.buildId,
       name: 'ng e2e',
       os: 'Windows',
       os_version: '10',
-      project: process.env.BROWSER_STACK_PROJECT,
+      project: options.projectName,
       'browserstack.debug': 'true',
       'browserstack.local': 'true',
     },
@@ -38,7 +36,7 @@ function applyBrowserStackProtractorConfig(config) {
       console.log('Connecting to BrowserStack Local...');
       return new Promise(function (resolve, reject) {
         bsLocal = new browserstack.Local();
-        bsLocal.start({ key: browserStackKey }, function (error) {
+        bsLocal.start({ key: options.browserStackKey }, function (error) {
           if (error) return reject(error);
           console.log('Connected. Now testing...');
 
@@ -55,8 +53,8 @@ function applyBrowserStackProtractorConfig(config) {
     },
   };
 
-  config = mergeWith(
-    config,
+  protractorConfig = mergeWith(
+    protractorConfig,
     browserStackOverrides,
     function (originalValue, overrideValue) {
       if (Array.isArray(originalValue)) {
@@ -65,7 +63,7 @@ function applyBrowserStackProtractorConfig(config) {
     }
   );
 
-  return config;
+  return protractorConfig;
 }
 
 module.exports = applyBrowserStackProtractorConfig;
