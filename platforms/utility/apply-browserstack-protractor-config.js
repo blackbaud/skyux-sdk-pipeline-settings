@@ -11,6 +11,18 @@ function applyBrowserStackProtractorConfig(config) {
     browserstackKey: browserStackKey,
     capabilities: {
       browserName: 'Chrome',
+      chromeOptions: {
+        args: [
+          '--disable-dev-shm-usage',
+          '--disable-extensions',
+          '--disable-gpu',
+          '--headless',
+          '--ignore-certificate-errors',
+          '--no-sandbox',
+          '--start-maximized',
+          '--window-size=1000,800',
+        ],
+      },
       build: process.env.BROWSER_STACK_BUILD_ID,
       name: 'ng e2e',
       os: 'Windows',
