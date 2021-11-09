@@ -4,6 +4,12 @@ const applyBrowserStackProtractorConfig = require('../../utility/apply-browserst
 const config = getConfig();
 
 if (process.env.VISUAL_BASELINES_ENABLE_BROWSERSTACK) {
+  console.log(
+    'APPLYING BROWSER STACK CONFIG!',
+    process.env.VISUAL_BASELINES_ENABLE_BROWSERSTACK,
+    typeof process.env.VISUAL_BASELINES_ENABLE_BROWSERSTACK,
+    `[${process.env.VISUAL_BASELINES_ENABLE_BROWSERSTACK}]`
+  );
   applyBrowserStackProtractorConfig(config);
 }
 
