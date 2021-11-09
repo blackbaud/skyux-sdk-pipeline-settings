@@ -22,6 +22,10 @@ function runE2eTests() {
     }
 
     if (argv['browserstack-access-key']) {
+      console.log(
+        'SETTING BROWSER_STACK_ACCESS_KEY to:',
+        argv['browserstack-access-key']
+      );
       process.env.BROWSER_STACK_ACCESS_KEY = argv['browserstack-access-key'];
     }
 
@@ -42,7 +46,7 @@ function runE2eTests() {
         'e2e',
         projectName,
         `--protractor-config=./node_modules/@skyux-sdk/pipeline-settings/platforms/${platform}/protractor/protractor.angular-cli.conf.js`,
-        '--webdriver-update=false'
+        '--webdriver-update=false',
       ],
       { stdio: 'inherit', cwd: process.cwd() }
     );

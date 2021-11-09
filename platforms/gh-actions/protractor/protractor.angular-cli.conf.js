@@ -4,6 +4,7 @@ const applyBrowserStackProtractorConfig = require('../../utility/apply-browserst
 const config = getConfig();
 
 if (process.env.BROWSER_STACK_USERNAME) {
+  console.log('APPLYING BROWSER STACK CONFIG!');
   applyBrowserStackProtractorConfig(config);
 }
 
