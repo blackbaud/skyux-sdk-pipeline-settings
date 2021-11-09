@@ -30,7 +30,6 @@ function applyBrowserStackProtractorConfig(protractorConfig, options) {
       'browserstack.local': 'true',
     },
     directConnect: false,
-    // SELENIUM_PROMISE_MANAGER: true,
 
     beforeLaunch: function () {
       console.log('Connecting to BrowserStack Local...');
