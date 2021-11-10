@@ -1,6 +1,9 @@
 const browserstack = require('browserstack-local');
 const mergeWith = require('lodash.mergewith');
 
+// This is what ties the tests to the local tunnel that's created.
+const id = `skyux-spa-${new Date().getTime()}`;
+
 let bsLocal;
 
 function applyBrowserStackProtractorConfig(protractorConfig, options) {
@@ -9,8 +12,10 @@ function applyBrowserStackProtractorConfig(protractorConfig, options) {
     browserstackKey: options.browserStackKey,
     capabilities: {
       browserName: 'Chrome',
+      browser_version: 'latest',
       chromeOptions: {
         args: [
+          'incognito',
           '--disable-dev-shm-usage',
           '--disable-extensions',
           '--disable-gpu',
@@ -26,21 +31,37 @@ function applyBrowserStackProtractorConfig(protractorConfig, options) {
       os: 'Windows',
       os_version: '10',
       project: options.projectName,
+      'browserstack.console': 'verbose',
       'browserstack.debug': 'true',
       'browserstack.local': 'true',
+      'browserstack.localIdentifier': id,
+      'browserstack.networkLogs': 'true',
+      'browserstack.selenium_version': '2.53.1',
+      'browserstack.use_w3c': 'false',
     },
     directConnect: false,
+    allScriptsTimeout: 11000,
 
     beforeLaunch: function () {
       console.log('Connecting to BrowserStack Local...');
       return new Promise(function (resolve, reject) {
         bsLocal = new browserstack.Local();
-        bsLocal.start({ key: options.browserStackKey }, function (error) {
-          if (error) return reject(error);
-          console.log('Connected. Now testing...');
+        bsLocal.start(
+          {
+            key: options.browserStackKey,
+            onlyAutomate: true,
+            forceLocal: true,
+            force: true,
+            localIdentifier: id,
+            verbose: true,
+          },
+          function (error) {
+            if (error) return reject(error);
+            console.log('Connected. Now testing...');
 
-          resolve();
-        });
+            resolve();
+          }
+        );
       });
     },
 
