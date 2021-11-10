@@ -36,11 +36,14 @@ function applyBrowserStackProtractorConfig(protractorConfig, options) {
       'browserstack.local': 'true',
       'browserstack.localIdentifier': id,
       'browserstack.networkLogs': 'true',
-      'browserstack.selenium_version': '2.53.1',
+      'browserstack.selenium_version': '3.6.0',
       'browserstack.use_w3c': 'false',
     },
     directConnect: false,
     allScriptsTimeout: 11000,
+    jasmineNodeOpts: {
+      defaultTimeoutInterval: 300000,
+    },
 
     beforeLaunch: function () {
       console.log('Connecting to BrowserStack Local...');
