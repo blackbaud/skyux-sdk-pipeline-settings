@@ -16,6 +16,10 @@ function applyJUnitConfig(config) {
   };
 }
 
+function applyCoberturaConfig(config) {
+  config.coverageReporter.reporters.push({ type: 'cobertura' });
+}
+
 module.exports = function (config) {
   const skyuxConfig = fs.readJsonSync(
     path.join(process.cwd(), 'skyuxconfig.json')
@@ -23,6 +27,7 @@ module.exports = function (config) {
 
   applyDefaultConfig(config);
   applyJUnitConfig(config);
+  applyCoberturaConfig(config);
 
   applyCodeCoverageThresholdConfig(
     config,
