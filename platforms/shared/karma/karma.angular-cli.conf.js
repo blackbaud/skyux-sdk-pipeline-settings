@@ -31,7 +31,7 @@ module.exports = function (config) {
     reporters: ['progress'],
     port: 9876,
     colors: true,
-    logLevel: config.LOG_INFO,
+    logLevel: config.LOG_DEBUG,
     autoWatch: false, // Angular sets this to true by default.
     browsers: ['ChromeHeadless_flags'], // Angular sets this to 'Chrome' by default.
     customLaunchers: {
