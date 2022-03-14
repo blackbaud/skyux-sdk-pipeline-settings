@@ -38,4 +38,9 @@ module.exports = function (config) {
     restartOnFileChange: false, // Angular sets this to true by default.
     browserDisconnectTolerance: 3,
   });
+
+  // Tell karma to wait for bundle to be completed before launching browsers.
+  // See: https://github.com/karma-runner/karma-chrome-launcher/issues/154#issuecomment-986661937
+  config.plugins.unshift(require('./plugins/karma.waitwebpack'));
+  config.frameworks.unshift('waitwebpack');
 };
