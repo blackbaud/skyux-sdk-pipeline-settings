@@ -33,7 +33,14 @@ module.exports = function (config) {
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: false, // Angular sets this to true by default.
-    browsers: ['ChromeHeadless'], // Angular sets this to 'Chrome' by default.
+    browsers: ['ChromeHeadless_flags'], // Angular sets this to 'Chrome' by default.
+    customLaunchers: {
+      ChromeHeadless_flags: {
+        base: 'ChromeHeadless',
+        flags: ['--disable-extensions', '--disable-gpu', '--no-sandbox'],
+      },
+    },
+    chromeOptions: {},
     singleRun: true, // Angular sets this to false by default.
     restartOnFileChange: false, // Angular sets this to true by default.
     browserDisconnectTolerance: 3,
