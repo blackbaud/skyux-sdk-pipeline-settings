@@ -29,6 +29,13 @@ module.exports = function (config) {
   applyJUnitConfig(config);
   applyCoberturaConfig(config);
 
+  config.set({
+    browserDisconnectTimeout: 6e5,
+    browserDisconnectTolerance: 2,
+    browserNoActivityTimeout: 6e5,
+    captureTimeout: 6e5,
+  });
+
   applyCodeCoverageThresholdConfig(
     config,
     lodashGet(
