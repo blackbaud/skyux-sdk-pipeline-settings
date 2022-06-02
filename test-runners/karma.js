@@ -61,7 +61,7 @@ function runCodeCoverage() {
       'npx',
       [
         '-p',
-        '@angular/cli',
+        '@angular/cli@13',
         'ng',
         'test',
         projectName,
