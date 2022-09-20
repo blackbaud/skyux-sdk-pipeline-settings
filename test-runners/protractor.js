@@ -41,7 +41,7 @@ function runE2eTests() {
       'npx',
       [
         '-p',
-        '@angular/cli@13',
+        '@angular/cli@14',
         'ng',
         'e2e',
         projectName,

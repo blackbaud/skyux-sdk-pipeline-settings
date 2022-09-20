@@ -12,17 +12,17 @@
   "author": "Blackbaud, Inc.",
   "license": "ISC",
   "dependencies": {
-    "browserstack-local": "1.4.9",
+    "browserstack-local": "1.5.1",
     "cross-spawn": "7.0.3",
     "karma-browserstack-launcher": "1.6.0",
     "karma-junit-reporter": "2.0.1",
     "lodash.get": "4.4.2",
     "lodash.mergewith": "4.6.2",
-    "minimist": "1.2.5"
+    "minimist": "1.2.6"
   },
   "devDependencies": {
-    "eslint": "8.11.0",
+    "eslint": "8.23.1",
     "eslint-config-prettier": "8.5.0",
-    "prettier": "2.6.0"
+    "prettier": "2.7.1"
   }
 }
