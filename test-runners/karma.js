@@ -5,6 +5,8 @@ const argv = minimist(process.argv.slice(2));
 
 function runCodeCoverage() {
   try {
+    console.log('ENV BEFORE:', process.env);
+
     const platform = argv['platform'];
     const projectName = argv['project-name'];
 
@@ -57,18 +59,23 @@ function runCodeCoverage() {
       process.env.BROWSER_STACK_PROJECT = argv['browserstack-project'];
     }
 
-    const result = crossSpawn.sync('ng', [
-      'test',
-      projectName,
-      '--karma-config',
-      `./node_modules/@skyux-sdk/pipeline-settings/platforms/${platform}/karma/karma.angular-cli.conf.js`,
-      '--watch',
-      'false',
-      '--code-coverage',
-    ]);
+    const result = crossSpawn.sync(
+      'ng',
+      [
+        'test',
+        projectName,
+        `--karma-config=./node_modules/@skyux-sdk/pipeline-settings/platforms/${platform}/karma/karma.angular-cli.conf.js`,
+        '--watch=false',
+        '--code-coverage',
+      ],
+      { stdio: 'inherit' }
+    );
 
     if (result.status !== 0) {
-      console.log(`Karma failed with exit code (${result.status}).`);
+      console.log(
+        `Karma failed with exit code (${result.status}).`,
+        result.output?.toString()
+      );
       process.exit(1);
     }
   } catch (err) {
