@@ -1,11 +1,12 @@
 const fs = require('fs-extra');
 const lodashGet = require('lodash.get');
 const path = require('path');
-const playwright = require('playwright');
+// const playwright = require('playwright');
 
-process.env.CHROME_BIN = playwright.chromium.executablePath();
-process.env.FIREFOX_BIN = playwright.firefox.executablePath();
-process.env.WEBKIT_HEADLESS_BIN = playwright.webkit.executablePath();
+// TODO: Try without playwright to see if it works?
+// process.env.CHROME_BIN = playwright.chromium.executablePath();
+// process.env.FIREFOX_BIN = playwright.firefox.executablePath();
+// process.env.WEBKIT_HEADLESS_BIN = playwright.webkit.executablePath();
 
 const applyDefaultConfig = require('../../shared/karma/karma.angular-cli.conf');
 const applyCodeCoverageThresholdConfig = require('../../utility/apply-code-coverage-threshold-config');
