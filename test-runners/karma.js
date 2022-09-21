@@ -57,15 +57,20 @@ function runCodeCoverage() {
       process.env.BROWSER_STACK_PROJECT = argv['browserstack-project'];
     }
 
-    const result = crossSpawn.sync('ng', [
-      'test',
-      projectName,
-      '--karma-config',
-      `./node_modules/@skyux-sdk/pipeline-settings/platforms/${platform}/karma/karma.angular-cli.conf.js`,
-      '--watch',
-      'false',
-      '--code-coverage',
-    ]);
+    const result = crossSpawn.sync(
+      'npx',
+      [
+        '-p',
+        '@angular/cli@13',
+        'ng',
+        'test',
+        projectName,
+        `--karma-config=./node_modules/@skyux-sdk/pipeline-settings/platforms/${platform}/karma/karma.angular-cli.conf.js`,
+        '--watch=false',
+        '--code-coverage',
+      ],
+      { stdio: 'inherit', cwd: process.cwd() }
+    );
 
     if (result.status !== 0) {
       console.log(`Karma failed with exit code (${result.status}).`);
