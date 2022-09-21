@@ -60,8 +60,6 @@ function runCodeCoverage() {
     const result = crossSpawn.sync(
       'npx',
       [
-        '-p',
-        '@angular/cli@14',
         'ng',
         'test',
         projectName,

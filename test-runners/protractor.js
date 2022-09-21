@@ -40,8 +40,6 @@ function runE2eTests() {
     const result = crossSpawn.sync(
       'npx',
       [
-        '-p',
-        '@angular/cli@14',
         'ng',
         'e2e',
         projectName,
