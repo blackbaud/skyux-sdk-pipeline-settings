@@ -3,7 +3,6 @@ const lodashGet = require('lodash.get');
 const path = require('path');
 const playwright = require('playwright');
 
-// TODO: Try without playwright to see if it works?
 process.env.CHROME_BIN = playwright.chromium.executablePath();
 process.env.FIREFOX_BIN = playwright.firefox.executablePath();
 process.env.WEBKIT_HEADLESS_BIN = playwright.webkit.executablePath();
