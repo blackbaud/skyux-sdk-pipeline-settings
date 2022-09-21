@@ -1,6 +1,11 @@
 const fs = require('fs-extra');
 const lodashGet = require('lodash.get');
 const path = require('path');
+const playwright = require('playwright');
+
+process.env.CHROME_BIN = playwright.chromium.executablePath();
+process.env.FIREFOX_BIN = playwright.firefox.executablePath();
+process.env.WEBKIT_HEADLESS_BIN = playwright.webkit.executablePath();
 
 const applyDefaultConfig = require('../../shared/karma/karma.angular-cli.conf');
 const applyCodeCoverageThresholdConfig = require('../../utility/apply-code-coverage-threshold-config');
@@ -24,22 +29,22 @@ function applyBrowserLauncherConfig(config, browserSetName) {
 
   browsers.set('chrome', {
     launcher: require('karma-chrome-launcher'),
-    name: 'Chrome',
+    name: 'ChromeHeadless',
   });
 
   browsers.set('edge', {
-    launcher: require('karma-edge-launcher'),
-    name: 'Edge',
+    launcher: require('@chiragrupani/karma-chromium-edge-launcher'),
+    name: 'EdgeHeadless',
   });
 
   browsers.set('firefox', {
     launcher: require('karma-firefox-launcher'),
-    name: 'Firefox',
+    name: 'FirefoxHeadless',
   });
 
   browsers.set('safari', {
-    launcher: require('karma-safari-launcher'),
-    name: 'Safari',
+    launcher: require('karma-webkit-launcher'),
+    name: 'WebkitHeadless',
   });
 
   const browserSets = {

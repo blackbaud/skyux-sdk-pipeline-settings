@@ -12,17 +12,18 @@
   "author": "Blackbaud, Inc.",
   "license": "ISC",
   "dependencies": {
+    "@chiragrupani/karma-chromium-edge-launcher": "2.2.2",
     "browserstack-local": "1.5.1",
     "cross-spawn": "7.0.3",
     "karma-browserstack-launcher": "1.6.0",
     "karma-chrome-launcher": "3.1.1",
-    "karma-edge-launcher": "0.4.2",
     "karma-firefox-launcher": "2.1.2",
     "karma-junit-reporter": "2.0.1",
-    "karma-safari-launcher": "1.0.0",
+    "karma-webkit-launcher": "1.0.2",
     "lodash.get": "4.4.2",
     "lodash.mergewith": "4.6.2",
-    "minimist": "1.2.6"
+    "minimist": "1.2.6",
+    "playwright": "1.26.0"
   },
   "devDependencies": {
     "eslint": "8.23.1",
