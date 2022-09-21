@@ -38,8 +38,11 @@ function runE2eTests() {
     }
 
     const result = crossSpawn.sync(
-      'ng',
+      'npx',
       [
+        '-p',
+        '@angular/cli@13',
+        'ng',
         'e2e',
         projectName,
         `--protractor-config=./node_modules/@skyux-sdk/pipeline-settings/platforms/${platform}/protractor/protractor.angular-cli.conf.js`,

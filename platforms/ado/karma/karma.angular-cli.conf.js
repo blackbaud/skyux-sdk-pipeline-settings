@@ -1,10 +1,14 @@
 const fs = require('fs-extra');
 const lodashGet = require('lodash.get');
 const path = require('path');
+const playwright = require('playwright');
+
+process.env.CHROME_BIN = playwright.chromium.executablePath();
+process.env.FIREFOX_BIN = playwright.firefox.executablePath();
+process.env.WEBKIT_HEADLESS_BIN = playwright.webkit.executablePath();
 
 const applyDefaultConfig = require('../../shared/karma/karma.angular-cli.conf');
 const applyCodeCoverageThresholdConfig = require('../../utility/apply-code-coverage-threshold-config');
-const applyBrowserStackKarmaConfig = require('../../utility/apply-browserstack-karma-config');
 
 function applyJUnitConfig(config) {
   config.reporters.push('junit');
@@ -18,6 +22,42 @@ function applyJUnitConfig(config) {
 
 function applyCoberturaConfig(config) {
   config.coverageReporter.reporters.push({ type: 'cobertura' });
+}
+
+function applyBrowserLauncherConfig(config, browserSetName) {
+  const browsers = new Map();
+
+  browsers.set('chrome', {
+    launcher: require('karma-chrome-launcher'),
+    name: 'ChromeHeadless',
+  });
+
+  browsers.set('edge', {
+    launcher: require('@chiragrupani/karma-chromium-edge-launcher'),
+    name: 'EdgeHeadless',
+  });
+
+  browsers.set('firefox', {
+    launcher: require('karma-firefox-launcher'),
+    name: 'FirefoxHeadless',
+  });
+
+  browsers.set('safari', {
+    launcher: require('karma-webkit-launcher'),
+    name: 'WebkitHeadless',
+  });
+
+  const browserSets = {
+    speedy: ['chrome'],
+    quirky: ['chrome', 'edge'],
+    paranoid: ['chrome', 'edge', 'firefox', 'safari'],
+  };
+
+  const browserSet = browserSets[browserSetName];
+  if (browserSet) {
+    config.plugins.push(...browserSet.map((k) => browsers.get(k).launcher));
+    config.browsers = browserSet.map((k) => browsers.get(k).name);
+  }
 }
 
 module.exports = function (config) {
@@ -50,19 +90,13 @@ module.exports = function (config) {
     )
   );
 
-  applyBrowserStackKarmaConfig(
+  applyBrowserLauncherConfig(
     config,
     process.env.SKY_UX_CODE_COVERAGE_BROWSER_SET ||
       lodashGet(
         skyuxConfig,
         'pipelineSettings.vsts.testSettings.unit.browserSet',
         undefined
-      ),
-    {
-      username: process.env.BROWSER_STACK_USERNAME,
-      accessKey: process.env.BROWSER_STACK_ACCESS_KEY,
-      buildId: process.env.BROWSER_STACK_BUILD_ID,
-      project: process.env.BROWSER_STACK_PROJECT,
-    }
+      )
   );
 };

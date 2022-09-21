@@ -5,8 +5,6 @@ const argv = minimist(process.argv.slice(2));
 
 function runCodeCoverage() {
   try {
-    console.log('ENV BEFORE:', process.env);
-
     const platform = argv['platform'];
     const projectName = argv['project-name'];
 
@@ -60,22 +58,22 @@ function runCodeCoverage() {
     }
 
     const result = crossSpawn.sync(
-      'ng',
+      'npx',
       [
+        '-p',
+        '@angular/cli@13',
+        'ng',
         'test',
         projectName,
         `--karma-config=./node_modules/@skyux-sdk/pipeline-settings/platforms/${platform}/karma/karma.angular-cli.conf.js`,
         '--watch=false',
         '--code-coverage',
       ],
-      { stdio: 'inherit' }
+      { stdio: 'inherit', cwd: process.cwd() }
     );
 
     if (result.status !== 0) {
-      console.log(
-        `Karma failed with exit code (${result.status}).`,
-        result.output?.toString()
-      );
+      console.log(`Karma failed with exit code (${result.status}).`);
       process.exit(1);
     }
   } catch (err) {
