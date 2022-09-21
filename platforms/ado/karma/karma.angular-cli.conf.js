@@ -1,12 +1,12 @@
 const fs = require('fs-extra');
 const lodashGet = require('lodash.get');
 const path = require('path');
-// const playwright = require('playwright');
+const playwright = require('playwright');
 
 // TODO: Try without playwright to see if it works?
-// process.env.CHROME_BIN = playwright.chromium.executablePath();
-// process.env.FIREFOX_BIN = playwright.firefox.executablePath();
-// process.env.WEBKIT_HEADLESS_BIN = playwright.webkit.executablePath();
+process.env.CHROME_BIN = playwright.chromium.executablePath();
+process.env.FIREFOX_BIN = playwright.firefox.executablePath();
+process.env.WEBKIT_HEADLESS_BIN = playwright.webkit.executablePath();
 
 const applyDefaultConfig = require('../../shared/karma/karma.angular-cli.conf');
 const applyCodeCoverageThresholdConfig = require('../../utility/apply-code-coverage-threshold-config');
@@ -81,6 +81,8 @@ module.exports = function (config) {
     config,
     lodashGet(
       skyuxConfig,
+      'pipelineSettings.testSettings.unit.codeCoverageThreshold',
+      // Keep the following for backward-compatibility.
       'pipelineSettings.vsts.testSettings.unit.codeCoverageThreshold',
       {
         branches: 0,
@@ -96,6 +98,8 @@ module.exports = function (config) {
     process.env.SKY_UX_CODE_COVERAGE_BROWSER_SET ||
       lodashGet(
         skyuxConfig,
+        'pipelineSettings.testSettings.unit.browserSet',
+        // Keep the following for backward-compatibility.
         'pipelineSettings.vsts.testSettings.unit.browserSet',
         undefined
       )
