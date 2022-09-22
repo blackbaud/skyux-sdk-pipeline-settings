@@ -1,6 +1,12 @@
+// Setup playwright before everything else.
+const playwright = require('playwright');
+process.env.CHROME_BIN = playwright.chromium.executablePath();
+process.env.FIREFOX_BIN = playwright.firefox.executablePath();
+process.env.WEBKIT_HEADLESS_BIN = playwright.webkit.executablePath();
+
 const applyDefaultConfig = require('../../shared/karma/karma.angular-cli.conf');
 const applyCodeCoverageThresholdConfig = require('../../utility/apply-code-coverage-threshold-config');
-const applyBrowserStackKarmaConfig = require('../../utility/apply-browserstack-karma-config');
+const applyBrowserLauncherKarmaConfig = require('../../utility/apply-browser-launcher-karma-config');
 
 module.exports = function (config) {
   applyDefaultConfig(config);
@@ -27,14 +33,8 @@ module.exports = function (config) {
     ),
   });
 
-  applyBrowserStackKarmaConfig(
+  applyBrowserLauncherKarmaConfig(
     config,
-    process.env.SKY_UX_CODE_COVERAGE_BROWSER_SET,
-    {
-      username: process.env.BROWSER_STACK_USERNAME,
-      accessKey: process.env.BROWSER_STACK_ACCESS_KEY,
-      buildId: process.env.BROWSER_STACK_BUILD_ID,
-      project: process.env.BROWSER_STACK_PROJECT,
-    }
+    process.env.SKY_UX_CODE_COVERAGE_BROWSER_SET
   );
 };

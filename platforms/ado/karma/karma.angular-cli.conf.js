@@ -2,9 +2,15 @@ const fs = require('fs-extra');
 const lodashGet = require('lodash.get');
 const path = require('path');
 
+// Setup playwright before everything else.
+const playwright = require('playwright');
+process.env.CHROME_BIN = playwright.chromium.executablePath();
+process.env.FIREFOX_BIN = playwright.firefox.executablePath();
+process.env.WEBKIT_HEADLESS_BIN = playwright.webkit.executablePath();
+
 const applyDefaultConfig = require('../../shared/karma/karma.angular-cli.conf');
+const applyBrowserLauncherKarmaConfig = require('../../utility/apply-browser-launcher-karma-config');
 const applyCodeCoverageThresholdConfig = require('../../utility/apply-code-coverage-threshold-config');
-const applyBrowserStackKarmaConfig = require('../../utility/apply-browserstack-karma-config');
 
 function applyJUnitConfig(config) {
   config.reporters.push('junit');
@@ -40,6 +46,8 @@ module.exports = function (config) {
     config,
     lodashGet(
       skyuxConfig,
+      'pipelineSettings.testSettings.unit.codeCoverageThreshold',
+      // Keep the following for backward-compatibility.
       'pipelineSettings.vsts.testSettings.unit.codeCoverageThreshold',
       {
         branches: 0,
@@ -50,19 +58,15 @@ module.exports = function (config) {
     )
   );
 
-  applyBrowserStackKarmaConfig(
+  applyBrowserLauncherKarmaConfig(
     config,
     process.env.SKY_UX_CODE_COVERAGE_BROWSER_SET ||
       lodashGet(
         skyuxConfig,
+        'pipelineSettings.testSettings.unit.browserSet',
+        // Keep the following for backward-compatibility.
         'pipelineSettings.vsts.testSettings.unit.browserSet',
         undefined
-      ),
-    {
-      username: process.env.BROWSER_STACK_USERNAME,
-      accessKey: process.env.BROWSER_STACK_ACCESS_KEY,
-      buildId: process.env.BROWSER_STACK_BUILD_ID,
-      project: process.env.BROWSER_STACK_PROJECT,
-    }
+      )
   );
 };
