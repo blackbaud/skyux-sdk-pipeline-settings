@@ -2,6 +2,11 @@ const applyDefaultConfig = require('../../shared/karma/karma.angular-cli.conf');
 const applyCodeCoverageThresholdConfig = require('../../utility/apply-code-coverage-threshold-config');
 const applyBrowserLauncherKarmaConfig = require('../../utility/apply-browser-launcher-karma-config');
 
+const playwright = require('playwright');
+process.env.CHROME_BIN = playwright.chromium.executablePath();
+process.env.FIREFOX_BIN = playwright.firefox.executablePath();
+process.env.WEBKIT_HEADLESS_BIN = playwright.webkit.executablePath();
+
 module.exports = function (config) {
   applyDefaultConfig(config);
 
