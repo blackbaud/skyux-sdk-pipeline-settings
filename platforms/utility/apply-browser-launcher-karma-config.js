@@ -1,9 +1,3 @@
-// const playwright = require('playwright');
-
-// process.env.CHROME_BIN = playwright.chromium.executablePath();
-// process.env.FIREFOX_BIN = playwright.firefox.executablePath();
-// process.env.WEBKIT_HEADLESS_BIN = playwright.webkit.executablePath();
-
 function applyBrowserLauncherKarmaConfig(config, browserSetName) {
   const browsers = new Map();
 
