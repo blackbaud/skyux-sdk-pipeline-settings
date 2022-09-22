@@ -8,6 +8,7 @@ process.env.FIREFOX_BIN = playwright.firefox.executablePath();
 process.env.WEBKIT_HEADLESS_BIN = playwright.webkit.executablePath();
 
 const applyDefaultConfig = require('../../shared/karma/karma.angular-cli.conf');
+const applyBrowserLauncherKarmaConfig = require('../../utility/apply-browser-launcher-karma-config');
 const applyCodeCoverageThresholdConfig = require('../../utility/apply-code-coverage-threshold-config');
 
 function applyJUnitConfig(config) {
@@ -22,42 +23,6 @@ function applyJUnitConfig(config) {
 
 function applyCoberturaConfig(config) {
   config.coverageReporter.reporters.push({ type: 'cobertura' });
-}
-
-function applyBrowserLauncherConfig(config, browserSetName) {
-  const browsers = new Map();
-
-  browsers.set('chrome', {
-    launcher: require('karma-chrome-launcher'),
-    name: 'ChromeHeadless',
-  });
-
-  browsers.set('edge', {
-    launcher: require('@chiragrupani/karma-chromium-edge-launcher'),
-    name: 'EdgeHeadless',
-  });
-
-  browsers.set('firefox', {
-    launcher: require('karma-firefox-launcher'),
-    name: 'FirefoxHeadless',
-  });
-
-  browsers.set('safari', {
-    launcher: require('karma-webkit-launcher'),
-    name: 'WebkitHeadless',
-  });
-
-  const browserSets = {
-    speedy: ['chrome'],
-    quirky: ['chrome', 'edge'],
-    paranoid: ['chrome', 'edge', 'firefox', 'safari'],
-  };
-
-  const browserSet = browserSets[browserSetName];
-  if (browserSet) {
-    config.plugins.push(...browserSet.map((k) => browsers.get(k).launcher));
-    config.browsers = browserSet.map((k) => browsers.get(k).name);
-  }
 }
 
 module.exports = function (config) {
@@ -92,7 +57,7 @@ module.exports = function (config) {
     )
   );
 
-  applyBrowserLauncherConfig(
+  applyBrowserLauncherKarmaConfig(
     config,
     process.env.SKY_UX_CODE_COVERAGE_BROWSER_SET ||
       lodashGet(
