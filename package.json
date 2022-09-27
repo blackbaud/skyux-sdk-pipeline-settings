@@ -13,6 +13,7 @@
   "license": "ISC",
   "dependencies": {
     "@chiragrupani/karma-chromium-edge-launcher": "2.2.2",
+    "@playwright/test": "1.26.0",
     "browserstack-local": "1.4.9",
     "cross-spawn": "7.0.3",
     "karma-browserstack-launcher": "1.6.0",
