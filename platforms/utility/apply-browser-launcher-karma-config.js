@@ -3,7 +3,7 @@ function applyBrowserLauncherKarmaConfig(config, browserSetName) {
 
   browsers.set('chrome', {
     launcher: require('karma-chrome-launcher'),
-    name: 'ChromeHeadless',
+    name: 'ChromeHeadless_flags',
   });
 
   browsers.set('edge', {
