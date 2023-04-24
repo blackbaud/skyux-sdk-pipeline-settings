@@ -21,11 +21,19 @@ function applyBrowserLauncherKarmaConfig(config, browserSetName) {
     name: 'WebkitHeadless',
   });
 
-  const browserSets = {
+  let browserSets = {
     speedy: ['chrome'],
     quirky: ['chrome', 'edge'],
     paranoid: ['chrome', 'edge', 'firefox', 'safari'],
   };
+  if (process.arch === 'arm64' && process.platform === 'linux') {
+    // Edge is not available on Linux ARM64
+    browserSets = {
+      speedy: ['chrome'],
+      quirky: ['chrome'],
+      paranoid: ['chrome', 'firefox', 'safari'],
+    };
+  }
 
   const browserSet = browserSets[browserSetName];
   if (browserSet) {
