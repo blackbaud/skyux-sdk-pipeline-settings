@@ -3,10 +3,7 @@ const lodashGet = require('lodash.get');
 const path = require('path');
 
 // Setup playwright before everything else.
-const playwright = require('playwright');
-process.env.CHROME_BIN = playwright.chromium.executablePath();
-process.env.FIREFOX_BIN = playwright.firefox.executablePath();
-process.env.WEBKIT_HEADLESS_BIN = playwright.webkit.executablePath();
+require('../../shared/playwright-browsers')();
 
 const applyDefaultConfig = require('../../shared/karma/karma.angular-cli.conf');
 const applyBrowserLauncherKarmaConfig = require('../../utility/apply-browser-launcher-karma-config');
