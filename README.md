@@ -10,10 +10,6 @@ Configuration files for SKY UX applications when running on different CI platfor
 node ./node_modules/@skyux-sdk/pipeline-settings/test-runners/karma.js
   --platform=ado
   --project-name="$Env:angularDefaultProject"
-  --browserstack-username="$(BrowserStackUser)"
-  --browserstack-access-key="$(BrowserStackKey)"
-  --browserstack-build-id="$(Build.BuildNumber)"
-  --browserstack-project="$(Build.DefinitionName)"
 ```
 
 ## GitHub Actions
@@ -24,10 +20,6 @@ node ./node_modules/@skyux-sdk/pipeline-settings/test-runners/karma.js
 node ./node_modules/@skyux-sdk/pipeline-settings/test-runners/karma.js
   --platform=gh-actions
   --project-name=
-  --browserstack-username=
-  --browserstack-access-key=
-  --browserstack-build-id=
-  --browserstack-project=
   --code-coverage-browser-set=paranoid
   --code-coverage-threshold-branches=
   --code-coverage-threshold-functions=

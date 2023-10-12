@@ -17,32 +17,9 @@ function runE2eTests() {
 
     process.env.SKY_UX_PROTRACTOR_PROJECT_ROOT = argv['project-root'] || '';
 
-    if (argv['browserstack-username']) {
-      process.env.SKY_UX_PROTRACTOR_BROWSER_STACK_USERNAME =
-        argv['browserstack-username'];
-    }
-
-    if (argv['browserstack-access-key']) {
-      process.env.SKY_UX_PROTRACTOR_BROWSER_STACK_ACCESS_KEY =
-        argv['browserstack-access-key'];
-    }
-
-    if (argv['browserstack-build-id']) {
-      process.env.SKY_UX_PROTRACTOR_BROWSER_STACK_BUILD_ID =
-        argv['browserstack-build-id'];
-    }
-
-    if (argv['browserstack-project']) {
-      process.env.SKY_UX_PROTRACTOR_BROWSER_STACK_PROJECT =
-        argv['browserstack-project'];
-    }
-
     const result = crossSpawn.sync(
-      'npx',
+      'ng',
       [
-        '-p',
-        '@angular/cli@13',
-        'ng',
         'e2e',
         projectName,
         `--protractor-config=./node_modules/@skyux-sdk/pipeline-settings/platforms/${platform}/protractor/protractor.angular-cli.conf.js`,

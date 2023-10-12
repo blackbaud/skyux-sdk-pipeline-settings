@@ -41,28 +41,9 @@ function runCodeCoverage() {
         argv['code-coverage-threshold-statements'];
     }
 
-    if (argv['browserstack-username']) {
-      process.env.BROWSER_STACK_USERNAME = argv['browserstack-username'];
-    }
-
-    if (argv['browserstack-access-key']) {
-      process.env.BROWSER_STACK_ACCESS_KEY = argv['browserstack-access-key'];
-    }
-
-    if (argv['browserstack-build-id']) {
-      process.env.BROWSER_STACK_BUILD_ID = argv['browserstack-build-id'];
-    }
-
-    if (argv['browserstack-project']) {
-      process.env.BROWSER_STACK_PROJECT = argv['browserstack-project'];
-    }
-
     const result = crossSpawn.sync(
-      'npx',
+      'ng',
       [
-        '-p',
-        '@angular/cli@13',
-        'ng',
         'test',
         projectName,
         `--karma-config=./node_modules/@skyux-sdk/pipeline-settings/platforms/${platform}/karma/karma.angular-cli.conf.js`,
