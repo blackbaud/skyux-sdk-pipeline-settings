@@ -1,5 +1,4 @@
 const fs = require('fs-extra');
-const lodashGet = require('lodash.get');
 const path = require('path');
 
 // Setup playwright before everything else.
@@ -41,29 +40,20 @@ module.exports = function (config) {
 
   applyCodeCoverageThresholdConfig(
     config,
-    lodashGet(
-      skyuxConfig,
-      'pipelineSettings.testSettings.unit.codeCoverageThreshold',
-      // Keep the following for backward-compatibility.
-      'pipelineSettings.vsts.testSettings.unit.codeCoverageThreshold',
-      {
+    skyuxConfig?.pipelineSettings?.testSettings?.unit?.codeCoverageThreshold ??
+      skyuxConfig?.pipelineSettings?.vsts?.testSettings?.unit
+        ?.codeCoverageThreshold ?? {
         branches: 0,
         functions: 0,
         lines: 0,
         statements: 0,
       }
-    )
   );
 
   applyBrowserLauncherKarmaConfig(
     config,
-    process.env.SKY_UX_CODE_COVERAGE_BROWSER_SET ||
-      lodashGet(
-        skyuxConfig,
-        'pipelineSettings.testSettings.unit.browserSet',
-        // Keep the following for backward-compatibility.
-        'pipelineSettings.vsts.testSettings.unit.browserSet',
-        undefined
-      )
+    process.env.SKY_UX_CODE_COVERAGE_BROWSER_SET ??
+      skyuxConfig?.pipelineSettings?.testSettings?.unit?.browserSet ??
+      skyuxConfig?.pipelineSettings?.vsts?.testSettings?.unit?.browserSet
   );
 };
