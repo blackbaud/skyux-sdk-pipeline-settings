@@ -5,7 +5,6 @@ const path = require('path');
 require('../../shared/playwright-browsers')();
 
 const applyDefaultConfig = require('../../shared/karma/karma.angular-cli.conf');
-const applyBrowserLauncherKarmaConfig = require('../../utility/apply-browser-launcher-karma-config');
 const applyCodeCoverageThresholdConfig = require('../../utility/apply-code-coverage-threshold-config');
 
 function applyJUnitConfig(config) {
@@ -48,12 +47,5 @@ module.exports = function (config) {
         lines: 0,
         statements: 0,
       }
-  );
-
-  applyBrowserLauncherKarmaConfig(
-    config,
-    process.env.SKY_UX_CODE_COVERAGE_BROWSER_SET ??
-      skyuxConfig?.pipelineSettings?.testSettings?.unit?.browserSet ??
-      skyuxConfig?.pipelineSettings?.vsts?.testSettings?.unit?.browserSet
   );
 };
