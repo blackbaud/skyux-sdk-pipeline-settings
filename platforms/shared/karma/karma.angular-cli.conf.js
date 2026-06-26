@@ -21,7 +21,7 @@ module.exports = function (config) {
         // or set a specific seed with `seed: 4321`
         random: false,
       },
-      clearContext: false, // leave Jasmine Spec Runner output visible in browser
+      clearContext: true, // we do not have the HTML reporter configured, so there is no need to retain context in the browser
     },
     coverageReporter: {
       dir: require('path').join(process.cwd(), './coverage'), // Angular sets this to './coverage/project-name' by default.
