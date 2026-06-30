@@ -41,6 +41,7 @@ module.exports = function (config) {
           '--disable-extensions',
           '--disable-gpu',
           '--no-sandbox',
+          '--disable-dev-shm-usage',
           '--window-size=1920,1080',
         ],
       },
