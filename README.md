@@ -26,6 +26,10 @@ node ./node_modules/@skyux-sdk/pipeline-settings/resolvers/node-version.js <repo
 A valid `.nvmrc` (`18`, `20`, `22`, or `24`) in the project folder overrides the mapping,
 except when `next` is set and SKY UX is installed.
 
+If `<repoPath>` does not contain a `package-lock.json`, the script fails — except for a
+deactivated SKY UX project (a `skyuxconfig.json` with `"deactivated": true` and no
+`.nvmrc`), in which case it returns the latest supported Node.js version (currently `24`).
+
 ## Azure DevOps
 
 ### Karma testing

@@ -9,9 +9,38 @@ const node24 = '24';
 
 const supportedNvmrcVersions = [node18, node20, node22, node24];
 
+// Returned for a deactivated project (see `isDeactivated`) that has no
+// package-lock.json to inspect.
+const defaultNodeVersion = node24;
+
+/**
+ * Checks whether a SKY UX project has been deactivated, based on its
+ * skyuxconfig.json.
+ *
+ * @param {string} repoPath - Path to the SKY UX project folder.
+ * @returns {boolean} True when skyuxconfig.json exists and has `deactivated: true`.
+ */
+function isDeactivated(repoPath) {
+  const skyuxConfigPath = `${repoPath}/skyuxconfig.json`;
+  if (!fs.existsSync(skyuxConfigPath)) {
+    return false;
+  }
+  try {
+    const skyuxConfig = JSON.parse(fs.readFileSync(skyuxConfigPath, 'utf-8'));
+    return skyuxConfig.deactivated === true;
+  } catch (e) {
+    return false;
+  }
+}
+
 /**
  * Resolves the major Node.js version a SKY UX project should build with,
  * based on the installed `@skyux/core` version found in its package-lock.json.
+ *
+ * If `repoPath` has no package-lock.json, this throws — except for a
+ * deactivated project (a skyuxconfig.json with `deactivated: true`) that also
+ * has no `.nvmrc`, in which case it returns the latest supported Node.js
+ * version instead.
  *
  * @param {string} repoPath - Path to the SKY UX project folder.
  * @param {boolean} [next] - When true, resolve the version for the *next*
@@ -27,8 +56,12 @@ function nodeVersion(repoPath, next) {
     throw new Error(`The repo path does not exist: ${repoPath}`);
   }
 
+  const nvmrcPath = `${repoPath}/.nvmrc`;
   const packageLockPath = `${repoPath}/package-lock.json`;
   if (!fs.existsSync(packageLockPath)) {
+    if (!fs.existsSync(nvmrcPath) && isDeactivated(repoPath)) {
+      return defaultNodeVersion;
+    }
     throw new Error(
       `Unable to find package-lock.json in the repo path: ${repoPath}`
     );
@@ -52,7 +85,6 @@ function nodeVersion(repoPath, next) {
     skyuxVersion.replace(/^[^0-9]*([0-9]+)[.].*$/, '$1')
   );
 
-  const nvmrcPath = `${repoPath}/.nvmrc`;
   if (fs.existsSync(nvmrcPath) && (!next || skyuxMajorVersion === 0)) {
     const nvmrcVersion = fs.readFileSync(nvmrcPath, 'utf-8').trim() || '0';
     if (supportedNvmrcVersions.includes(nvmrcVersion)) {
