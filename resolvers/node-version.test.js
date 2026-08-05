@@ -48,6 +48,13 @@ function writeNvmrc(contents) {
   fs.writeFileSync(path.join(repoPath, '.nvmrc'), contents);
 }
 
+function writeSkyuxConfig(config) {
+  fs.writeFileSync(
+    path.join(repoPath, 'skyuxconfig.json'),
+    JSON.stringify(config)
+  );
+}
+
 test('reads SKY UX version from a modern (v3) lockfile', () => {
   writeLock('14.2.0', 3);
   assert.strictEqual(nodeVersion(repoPath), '24');
@@ -134,6 +141,22 @@ test('honors .nvmrc when next is set but SKY UX is absent', () => {
 });
 
 test('throws when package-lock.json is missing', () => {
+  assert.throws(() => nodeVersion(repoPath), /Unable to find package-lock/);
+});
+
+test('falls back to the latest supported Node.js version for a deactivated project with no package-lock.json or .nvmrc', () => {
+  writeSkyuxConfig({ deactivated: true });
+  assert.strictEqual(nodeVersion(repoPath), '24');
+});
+
+test('throws when package-lock.json is missing and .nvmrc is present, even for a deactivated project', () => {
+  writeSkyuxConfig({ deactivated: true });
+  writeNvmrc('20');
+  assert.throws(() => nodeVersion(repoPath), /Unable to find package-lock/);
+});
+
+test('throws when package-lock.json is missing and the project is not deactivated', () => {
+  writeSkyuxConfig({ deactivated: false });
   assert.throws(() => nodeVersion(repoPath), /Unable to find package-lock/);
 });
 
